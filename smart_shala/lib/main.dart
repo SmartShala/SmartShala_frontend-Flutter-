@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './login.dart';
 import './register.dart';
+import './home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,7 @@ void main() {
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
+      '/home/':(context) =>  MainPage(),
     },
   ));
 }
