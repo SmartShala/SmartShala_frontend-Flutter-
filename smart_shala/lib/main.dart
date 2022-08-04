@@ -10,11 +10,11 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const HomePage(),
+    home: const MainPage(),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
-      '/home/':(context) =>  MainPage(),
+      '/home/': (context) => MainPage(),
     },
   ));
 }
