@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/icon_data.dart';
+
 import 'package:smart_shala/login.dart';
 import 'package:smart_shala/ocr.dart';
 import 'package:smart_shala/test.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -12,10 +15,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    testpage(),
+    //testpage(),
     ocrpage(),
-    addtestpage(),
-    LoginView(),
+    //addtestpage(),
+    const LoginView(),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -33,29 +36,28 @@ class _MainPageState extends State<MainPage> {
           iconSize: 30,
           currentIndex: currentIndex,
           onTap: (index) => setState(() => currentIndex = index),
-          items: [
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: (Icons.home),
+              icon: Icon(Icons.home),
               label: 'Home',
               backgroundColor: Colors.blue,
             ),
             BottomNavigationBarItem(
-              icon: (Icons.favorite),
+              icon: Icon(Icons.favorite),
               label: 'tests',
               backgroundColor: Colors.green,
             ),
             BottomNavigationBarItem(
-              icon: (Icons.chat),
-              label: 'ocr',
-              backgroundColor: Colors.blue,
-            ),
+                icon: Icon(Icons.chat),
+                label: 'ocr',
+                backgroundColor: Colors.blue),
             BottomNavigationBarItem(
-              icon: (Icons.add),
+              icon: Icon(Icons.add),
               label: 'addtest',
               backgroundColor: Colors.green,
             ),
             BottomNavigationBarItem(
-              icon: (Icons.person),
+              icon: Icon(Icons.person),
               label: 'login',
               backgroundColor: Colors.blue,
             ),
