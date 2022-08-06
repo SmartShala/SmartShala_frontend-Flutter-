@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import './login.dart';
 import './register.dart';
@@ -10,11 +11,19 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const MainPage(),
+    home: AnimatedSplashScreen(
+      duration: 1500,
+      splashIconSize: 300,
+      splashTransition: SplashTransition.fadeTransition,
+      splash: Center(
+        child: Image.asset('images/logo.jpeg'),
+      ),
+      nextScreen: const MainPage(),
+    ),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
-      '/home/': (context) => MainPage(),
+      '/home/': (context) => const MainPage(),
     },
   ));
 }
