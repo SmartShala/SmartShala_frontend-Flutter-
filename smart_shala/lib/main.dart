@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_shala/dash.dart';
 import './login.dart';
 import './register.dart';
 import './home.dart';
@@ -10,11 +11,12 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const MainPage(),
+    home: const Dashboard(title: "Dashboard"),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
-      '/home/': (context) => MainPage(),
+      '/home/': (context) => const MainPage(),
+      '/dashboard/': (context) => const Dashboard(title: "Dashboard")
     },
   ));
 }
