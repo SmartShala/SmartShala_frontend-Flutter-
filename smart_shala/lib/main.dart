@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_shala/dash.dart';
 import './login.dart';
@@ -11,7 +12,15 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const Dashboard(title: "Dashboard"),
+    home: AnimatedSplashScreen(
+      duration: 1500,
+      splashIconSize: 300,
+      splashTransition: SplashTransition.fadeTransition,
+      splash: Center(
+        child: Image.asset('images/logo.jpeg'),
+      ),
+      nextScreen: const MainPage(),
+    ),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
