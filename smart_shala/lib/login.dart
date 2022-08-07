@@ -50,7 +50,9 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextButton(
             onPressed: () async {
-              final email = _email.text;
+              // final email = _email.text;
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/home/', (route) => false);
             },
             child: const Text('Login'),
           ),

@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_shala/dash.dart';
 import './login.dart';
 import './register.dart';
 import './home.dart';
@@ -24,6 +25,7 @@ void main() {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
       '/home/': (context) => const MainPage(),
+      '/dashboard/': (context) => const Dashboard(title: "Dashboard")
     },
   ));
 }
