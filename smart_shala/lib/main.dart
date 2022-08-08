@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './login.dart';
 import './register.dart';
 import './home.dart';
+import '/test.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,11 +11,12 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const MainPage(),
+    home: const testpage(),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
-      '/home/': (context) => MainPage(),
+      '/home/': (context) => const MainPage(),
+      '/test/': (context) => const testpage(),
     },
   ));
 }

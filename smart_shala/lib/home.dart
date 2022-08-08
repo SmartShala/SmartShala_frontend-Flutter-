@@ -15,7 +15,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    //testpage(),
+    const testpage(),
     ocrpage(),
     //addtestpage(),
     const LoginView(),
