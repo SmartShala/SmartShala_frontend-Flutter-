@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/icon_data.dart';
+import 'package:smart_shala/dash.dart';
 
 import 'package:smart_shala/login.dart';
 import 'package:smart_shala/ocr.dart';
@@ -17,18 +18,23 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     const testpage(),
     ocrpage(),
+
+    //testpage(),
+    // const Dashboard(),
+    // ocrpage(),
+
     //addtestpage(),
-    const LoginView(),
+    // const LoginView(),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Bottom navbar'),
+          title: const Text('Home'),
           centerTitle: true,
         ),
         body: IndexedStack(
           index: currentIndex,
-          children: screens,
+          // children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.white,
@@ -43,7 +49,7 @@ class _MainPageState extends State<MainPage> {
               backgroundColor: Colors.blue,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
+              icon: Icon(Icons.article),
               label: 'tests',
               backgroundColor: Colors.green,
             ),
