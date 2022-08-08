@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:smart_shala/login.dart';
 import 'package:smart_shala/ocr.dart';
 import 'package:smart_shala/test.dart';
+import 'addtest.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _MainPageState extends State<MainPage> {
     ocrpage(),
     //addtestpage(),
     const LoginView(),
+    const TestDetails(),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
