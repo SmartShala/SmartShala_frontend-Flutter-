@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TestDetails extends StatefulWidget {
   const TestDetails({Key? key}) : super(key: key);
@@ -26,9 +27,8 @@ class _TestDetailsState extends State<TestDetails> {
               _getPaddedText('Topic'),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) => TestCreationPage())
-                  );
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => TestCreationPage()));
                   // TODO: Add data validation and store input data
                 },
                 child: const Text('Create'),
@@ -72,8 +72,50 @@ class TestCreationPage extends StatefulWidget {
 }
 
 class _TestCreationPageState extends State<TestCreationPage> {
+  String? dropdownvalue = 'MultipleChoice';
+
   @override
   Widget build(BuildContext context) {
-    return const Text('Nice');
+    return Scaffold(
+      appBar: AppBar(title: const Text('Create Test')),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    imageSelectorGallery();
+                  },
+                  child: Text('Browse')),
+              DropdownButton<String>(
+                value: dropdownvalue,
+                items:
+                    <String>['MultipleChoice', 'Checkbox'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    dropdownvalue = value;
+                  });
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  imageSelectorGallery() async {
+    final ImagePicker _picker = ImagePicker();
+    // Pick an image
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    // TODO: Use the image for upload
+    setState(() {});
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Image Selected')));
   }
 }
