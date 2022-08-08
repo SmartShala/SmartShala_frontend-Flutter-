@@ -10,6 +10,9 @@ class TestDetails extends StatefulWidget {
 
 class _TestDetailsState extends State<TestDetails> {
   final _formkey = GlobalKey<FormState>();
+  int? year = 1;
+  String? section = 'A';
+
   // Function nameOnSaved (value) => ;
   @override
   Widget build(BuildContext context) {
@@ -24,14 +27,56 @@ class _TestDetailsState extends State<TestDetails> {
             children: <Widget>[
               _getPaddedText('Test Name'),
               _getPaddedText('Description'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 90,
+                    child: DropdownButtonFormField<int>(
+                      value: year,
+                      items: [1, 2, 3, 4].map((int value) {
+                        return DropdownMenuItem<int>(
+                          value: value,
+                          child: Text(value.toString()),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          year = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 90,
+                    child: DropdownButtonFormField<String>(
+                      value: section,
+                      items: ['A', 'B', 'C', 'D'].map((value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          section = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               _getPaddedText('Topic'),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => TestCreationPage()));
-                  // TODO: Add data validation and store input data
-                },
-                child: const Text('Create'),
+              SizedBox(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const TestCreationPage()));
+                    // TODO: Add data validation and store input data
+                  },
+                  child: const Text('Create'),
+                ),
               )
             ],
           ),
@@ -86,8 +131,8 @@ class _TestCreationPageState extends State<TestCreationPage> {
                   onPressed: () {
                     imageSelectorGallery();
                   },
-                  child: Text('Browse')),
-              DropdownButton<String>(
+                  child: const Text('Browse')),
+              DropdownButtonFormField<String>(
                 value: dropdownvalue,
                 items:
                     <String>['MultipleChoice', 'Checkbox'].map((String value) {
@@ -116,6 +161,6 @@ class _TestCreationPageState extends State<TestCreationPage> {
     // TODO: Use the image for upload
     setState(() {});
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Image Selected')));
+        .showSnackBar(const SnackBar(content: Text('Image Selected')));
   }
 }
