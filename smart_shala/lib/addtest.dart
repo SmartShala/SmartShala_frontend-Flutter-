@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class TestDetails extends StatefulWidget {
   const TestDetails({Key? key}) : super(key: key);
@@ -10,60 +8,72 @@ class TestDetails extends StatefulWidget {
 }
 
 class _TestDetailsState extends State<TestDetails> {
+  final _formkey = GlobalKey<FormState>();
+  // Function nameOnSaved (value) => ;
   @override
   Widget build(BuildContext context) {
-    final _formkey = GlobalKey<FormState>();
     return Form(
       key: _formkey,
-      child: _TestForm(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _getPaddedText('Test Name'),
+              _getPaddedText('Description'),
+              _getPaddedText('Topic'),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) => TestCreationPage())
+                  );
+                  // TODO: Add data validation and store input data
+                },
+                child: const Text('Create'),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
-}
 
-class _TestForm extends StatelessWidget {
-  const _TestForm({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _getPaddedText('Test Name'),
-            _getPaddedText('Description'),
-            _getPaddedText('Topic'),
-            ElevatedButton(
-              onPressed: () {
-                // if _formKey
-              },
-              child: const Text('Create'),
-            )
-          ],
+  Widget _getPaddedText(String label, {double px = 8, double py = 16}) {
+    /// Generate padded textform widgets with default padding parameters
+    /// to avoid unnecessary duplicating
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: px, vertical: py),
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Required Field';
+          }
+          if (value.length < 3) {
+            return 'Too short';
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: label,
         ),
       ),
     );
   }
 }
 
-Padding _getPaddedText(String label, {double px = 8, double py = 16}) {
-  /// Generate padded textform widgets with default padding parameters
-  /// to avoid unnecessary duplicating
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: px, vertical: py),
-    child: TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Required Field';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: label,
-      ),
-    ),
-  );
+class TestCreationPage extends StatefulWidget {
+  const TestCreationPage({Key? key}) : super(key: key);
+
+  @override
+  State<TestCreationPage> createState() => _TestCreationPageState();
+}
+
+class _TestCreationPageState extends State<TestCreationPage> {
+  @override
+  Widget build(BuildContext context) {
+    return const Text('Nice');
+  }
 }
