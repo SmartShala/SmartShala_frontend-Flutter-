@@ -5,6 +5,7 @@ import 'package:smart_shala/dash.dart';
 import 'package:smart_shala/login.dart';
 import 'package:smart_shala/ocr.dart';
 import 'package:smart_shala/test.dart';
+import 'addtest.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -20,7 +21,8 @@ class _MainPageState extends State<MainPage> {
     // const Dashboard(),
     // ocrpage(),
     //addtestpage(),
-    // const LoginView(),
+    const LoginView(),
+    const TestDetails(),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
