@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'test_creation.dart';
 
 class TestDetails extends StatefulWidget {
   const TestDetails({Key? key}) : super(key: key);
@@ -24,8 +24,11 @@ class _TestDetailsState extends State<TestDetails> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              // Test Name Field
               _getPaddedText('Test Name'),
+              // Test Description Field
               _getPaddedText('Description'),
+              // Year and Section Row
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
@@ -84,17 +87,16 @@ class _TestDetailsState extends State<TestDetails> {
                       ],
                     )),
               ),
+              // Test Topic Field
               _getPaddedText('Topic'),
-              SizedBox(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const TestCreationPage()));
-                    // TODO: Add data validation and store input data
-                  },
-                  child: const Text('Create'),
-                ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const TestCreationPage()));
+                  // TODO: Add data validation and store input data
+                },
+                child: const Text('Create'),
               )
             ],
           ),
@@ -124,61 +126,5 @@ class _TestDetailsState extends State<TestDetails> {
         ),
       ),
     );
-  }
-}
-
-class TestCreationPage extends StatefulWidget {
-  const TestCreationPage({Key? key}) : super(key: key);
-
-  @override
-  State<TestCreationPage> createState() => _TestCreationPageState();
-}
-
-class _TestCreationPageState extends State<TestCreationPage> {
-  String? year = 'MultipleChoice';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Create Test')),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    imageSelectorGallery();
-                  },
-                  child: Text('Browse')),
-              DropdownButton<String>(
-                value: year,
-                items:
-                    <String>['MultipleChoice', 'Checkbox'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    year = value;
-                  });
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  imageSelectorGallery() async {
-    final ImagePicker _picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    // TODO: Use the image for upload
-    setState(() {});
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Image Selected')));
   }
 }
