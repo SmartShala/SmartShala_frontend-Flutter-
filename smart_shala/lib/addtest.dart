@@ -10,6 +10,8 @@ class TestDetails extends StatefulWidget {
 
 class _TestDetailsState extends State<TestDetails> {
   final _formkey = GlobalKey<FormState>();
+  int? year = 1;
+  String? section = 'A';
   // Function nameOnSaved (value) => ;
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,64 @@ class _TestDetailsState extends State<TestDetails> {
             children: <Widget>[
               _getPaddedText('Test Name'),
               _getPaddedText('Description'),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                child: SizedBox(
+                    width: double.maxFinite,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Year', style: TextStyle(fontSize: 20)),
+                        DropdownButton<int?>(
+                          value: year,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          onChanged: (int? newValue) {
+                            setState(() {
+                              year = newValue!;
+                            });
+                          },
+                          items: <int>[1, 2, 3, 4]
+                              .map<DropdownMenuItem<int?>>((value) {
+                            return DropdownMenuItem<int?>(
+                              value: value,
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                        ),
+                        const SizedBox(width: 90),
+                        const Text('Section', style: TextStyle(fontSize: 20)),
+                        DropdownButton<String>(
+                          value: section,
+                          icon: const Icon(Icons.arrow_circle_down, size: 18),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              section = newValue!;
+                            });
+                          },
+                          items: <String>['A', 'B', 'C', 'D']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        )
+                      ],
+                    )),
+              ),
               _getPaddedText('Topic'),
               ElevatedButton(
                 onPressed: () {
@@ -72,7 +132,7 @@ class TestCreationPage extends StatefulWidget {
 }
 
 class _TestCreationPageState extends State<TestCreationPage> {
-  String? dropdownvalue = 'MultipleChoice';
+  String? year = 'MultipleChoice';
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +148,7 @@ class _TestCreationPageState extends State<TestCreationPage> {
                   },
                   child: Text('Browse')),
               DropdownButton<String>(
-                value: dropdownvalue,
+                value: year,
                 items:
                     <String>['MultipleChoice', 'Checkbox'].map((String value) {
                   return DropdownMenuItem<String>(
@@ -98,7 +158,7 @@ class _TestCreationPageState extends State<TestCreationPage> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    dropdownvalue = value;
+                    year = value;
                   });
                 },
               ),
