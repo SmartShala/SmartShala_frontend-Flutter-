@@ -17,12 +17,13 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    //testpage(),
-    // const Dashboard(),
-    // ocrpage(),
-    //addtestpage(),
-    const LoginView(),
+    // testpage(),
+    const Dashboard(title: 'Dashboard'),
+    ocrpage(),
+    ocrpage(),
+    // addtestpage(),
     const TestDetails(),
+    const LoginView(),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -32,7 +33,7 @@ class _MainPageState extends State<MainPage> {
         ),
         body: IndexedStack(
           index: currentIndex,
-          // children: screens,
+          children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.white,
