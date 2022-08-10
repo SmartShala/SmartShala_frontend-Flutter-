@@ -34,8 +34,8 @@ class _TestDetailsState extends State<TestDetails> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                 child: SizedBox(
-                    width: double.maxFinite,
-                    child: Row(
+                  width: double.maxFinite,
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('Year', style: TextStyle(fontSize: 20)),
@@ -85,8 +85,8 @@ class _TestDetailsState extends State<TestDetails> {
                             );
                           }).toList(),
                         )
-                      ],
-                    )),
+                      ]),
+                ),
               ),
               // Test Topic Field
               _getPaddedText('Topic'),
@@ -100,33 +100,33 @@ class _TestDetailsState extends State<TestDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: SizedBox(
-                width: double.infinity,
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        imageSelectorGallery();
-                      },
-                      icon: const Icon(Icons.image),
-                      label: const Text('Upload Question'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const TestCreationPage()));
-                        // TODO: Add data validation and store input data
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 247, 86, 75),
-                      ),
-                      child: const Text('Create'),
-                    )
-                  ],
-                )),
+                  width: double.infinity,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            imageSelectorGallery();
+                          },
+                          icon: const Icon(Icons.image),
+                          label: const Text('Upload Question'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const TestCreationPage()));
+                            // TODO: Add data validation and store input data
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color.fromARGB(255, 247, 86, 75),
+                          ),
+                          child: const Text('Create'),
+                        )
+                      ]),
+                ),
               ),
             ],
           ),
@@ -159,13 +159,13 @@ class _TestDetailsState extends State<TestDetails> {
   }
 
   Future<List<XFile>?> imageSelectorGallery() async {
+    dynamic scaf = ScaffoldMessenger.of(context);
     final ImagePicker picker = ImagePicker();
     // Pick an image
     final List<XFile>? image = await picker.pickMultiImage();
     // TODO: Use the image for upload
     setState(() {});
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Image Selected')));
+    scaf.showSnackBar(const SnackBar(content: Text('Image Selected')));
     return image;
   }
 }
