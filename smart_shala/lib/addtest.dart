@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'test_creation.dart';
 
 class TestDetails extends StatefulWidget {
@@ -33,8 +34,8 @@ class _TestDetailsState extends State<TestDetails> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                 child: SizedBox(
-                    width: double.maxFinite,
-                    child: Row(
+                  width: double.maxFinite,
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('Year', style: TextStyle(fontSize: 20)),
@@ -84,20 +85,49 @@ class _TestDetailsState extends State<TestDetails> {
                             );
                           }).toList(),
                         )
-                      ],
-                    )),
+                      ]),
+                ),
               ),
               // Test Topic Field
               _getPaddedText('Topic'),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const TestCreationPage()));
-                  // TODO: Add data validation and store input data
-                },
-                child: const Text('Create'),
-              )
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      labelText: "Enter number of questions"),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            imageSelectorGallery();
+                          },
+                          icon: const Icon(Icons.image),
+                          label: const Text('Upload Question'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const TestCreationPage()));
+                            // TODO: Add data validation and store input data
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color.fromARGB(255, 247, 86, 75),
+                          ),
+                          child: const Text('Create'),
+                        )
+                      ]),
+                ),
+              ),
             ],
           ),
         ),
@@ -126,5 +156,16 @@ class _TestDetailsState extends State<TestDetails> {
         ),
       ),
     );
+  }
+
+  Future<List<XFile>?> imageSelectorGallery() async {
+    dynamic scaf = ScaffoldMessenger.of(context);
+    final ImagePicker picker = ImagePicker();
+    // Pick images for question; may need to add option to choose a pdf
+    final List<XFile>? image = await picker.pickMultiImage();
+    // TODO: Use the image for upload
+    setState(() {});
+    scaf.showSnackBar(const SnackBar(content: Text('Image Selected')));
+    return image;
   }
 }
