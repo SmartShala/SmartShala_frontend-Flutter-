@@ -21,11 +21,15 @@ class _TestOptionsState extends State<TestOptions> {
 
     // TODO: Save the options in an attribute
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
-          widget.questionnum.toString(),
-          style: const TextStyle(fontSize: 20),
+          'Q${widget.questionnum}.',
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          ),
         ),
         for (var i = 0; i < opts.length; i++)
           Flexible(
@@ -56,13 +60,25 @@ class TestCreationPage extends StatefulWidget {
 
 class _TestCreationPageState extends State<TestCreationPage> {
   /// This page contains a listview of 4 radio buttons signifying
-  /// options a,b,c,d for each question; question number 
+  /// options a,b,c,d for each question; question number
   /// was specified in the previous page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Create Test')),
-      body: const TestOptions(questionnum: 1),
+      body: ListView.builder(
+          // TODO: Get the question number from the previous page
+          itemCount: 30,
+          itemBuilder: (context, index) {
+            return Column(children: [
+              TestOptions(questionnum: index + 1),
+              const Divider(
+                thickness: 2,
+                indent: 9,
+                endIndent: 9,
+              ),
+            ]);
+          }),
     );
   }
 }

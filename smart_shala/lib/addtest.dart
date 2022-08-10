@@ -161,7 +161,7 @@ class _TestDetailsState extends State<TestDetails> {
   Future<List<XFile>?> imageSelectorGallery() async {
     dynamic scaf = ScaffoldMessenger.of(context);
     final ImagePicker picker = ImagePicker();
-    // Pick an image
+    // Pick images for question; may need to add option to choose a pdf
     final List<XFile>? image = await picker.pickMultiImage();
     // TODO: Use the image for upload
     setState(() {});
