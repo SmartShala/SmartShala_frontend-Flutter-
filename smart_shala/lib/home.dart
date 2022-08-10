@@ -5,6 +5,7 @@ import 'package:smart_shala/dash.dart';
 import 'package:smart_shala/login.dart';
 import 'package:smart_shala/ocr.dart';
 import 'package:smart_shala/test.dart';
+import 'addtest.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -25,6 +26,15 @@ class _MainPageState extends State<MainPage> {
 
     //addtestpage(),
     // const LoginView(),
+=======
+    // testpage(),
+    const Dashboard(title: 'Dashboard'),
+    ocrpage(),
+    ocrpage(),
+    // addtestpage(),
+    const TestDetails(),
+    const LoginView(),
+>>>>>>> dev
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -34,7 +44,7 @@ class _MainPageState extends State<MainPage> {
         ),
         body: IndexedStack(
           index: currentIndex,
-          // children: screens,
+          children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.white,
