@@ -17,16 +17,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    const testpage(),
-    ocrpage(),
 
-    //testpage(),
-    // const Dashboard(),
-    // ocrpage(),
-
-    //addtestpage(),
-    // const LoginView(),
-=======
     // testpage(),
     const Dashboard(title: 'Dashboard'),
     ocrpage(),
@@ -34,7 +25,7 @@ class _MainPageState extends State<MainPage> {
     // addtestpage(),
     const TestDetails(),
     const LoginView(),
->>>>>>> dev
+
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
