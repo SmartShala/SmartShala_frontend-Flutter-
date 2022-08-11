@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'test_creation.dart';
+import 'models/testdetailsmodel.dart';
 
 class TestDetails extends StatefulWidget {
   const TestDetails({Key? key}) : super(key: key);
@@ -11,9 +14,25 @@ class TestDetails extends StatefulWidget {
 
 class _TestDetailsState extends State<TestDetails> {
   final _formkey = GlobalKey<FormState>();
+
   int? year = 1;
   String? section = 'A';
-  // Function nameOnSaved (value) => ;
+  final name = TextEditingController();
+  final desc = TextEditingController();
+  final topic = TextEditingController();
+  final quesNum = TextEditingController();
+
+  /// Override the default destructor to destruct resources taken by
+  /// controllers first
+  @override
+  void dispose() {
+    name.dispose();
+    desc.dispose();
+    topic.dispose();
+    quesNum.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -26,9 +45,9 @@ class _TestDetailsState extends State<TestDetails> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // Test Name Field
-              _getPaddedText('Test Name'),
+              _getPaddedText('Test Name', controller: name),
               // Test Description Field
-              _getPaddedText('Description'),
+              _getPaddedText('Description', controller: desc),
               // Year and Section Row
               Padding(
                 padding:
@@ -89,43 +108,62 @@ class _TestDetailsState extends State<TestDetails> {
                 ),
               ),
               // Test Topic Field
-              _getPaddedText('Topic'),
+              _getPaddedText('Topic', controller: topic),
 
+              // Question Number Field
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: TextFormField(
+                  validator: (value) {
+                    int intval;
+
+                    if (value == null || value.isEmpty) {
+                      return 'Required Field';
+                    }
+                    try {
+                      intval = int.parse(value);
+                    } on FormatException {
+                      return 'Non-number character input';
+                    }
+                    if (intval < 1) {
+                      return 'Invalid Question Number';
+                    }
+                    return null;
+                  },
+                  controller: quesNum,
                   decoration: const InputDecoration(
                       labelText: "Enter number of questions"),
                   keyboardType: TextInputType.number,
                 ),
               ),
+
+              // Creation Button
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: SizedBox(
                   width: double.infinity,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            imageSelectorGallery();
-                          },
-                          icon: const Icon(Icons.image),
-                          label: const Text('Upload Question'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const TestCreationPage()));
-                            // TODO: Add data validation and store input data
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color.fromARGB(255, 247, 86, 75),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formkey.currentState!.validate()) {
+                        _sendDetailsToApi(TestDetailsModel(
+                            name: name.text,
+                            desc: desc.text,
+                            year: year!,
+                            sec: section!,
+                            topic: topic.text));
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => TestCreationPage(
+                            totalQuestions: int.parse(quesNum.text),
                           ),
-                          child: const Text('Create'),
-                        )
-                      ]),
+                        ));
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 247, 86, 75),
+                    ),
+                    child: const Text('Create'),
+                  ),
                 ),
               ),
             ],
@@ -135,12 +173,22 @@ class _TestDetailsState extends State<TestDetails> {
     );
   }
 
-  Widget _getPaddedText(String label, {double px = 8, double py = 16}) {
+  void _sendDetailsToApi(TestDetailsModel model) {
+    // TODO: Send model to api
+    log(model.toJson().toString());
+  }
+
+  Widget _getPaddedText(String label,
+      {required TextEditingController controller,
+      double px = 8,
+      double py = 16}) {
     /// Generate padded textform widgets with default padding parameters
     /// to avoid unnecessary duplicating
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: px, vertical: py),
       child: TextFormField(
+        controller: controller,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Required Field';
@@ -159,7 +207,7 @@ class _TestDetailsState extends State<TestDetails> {
   }
 
   Future<List<XFile>?> imageSelectorGallery() async {
-    dynamic scaf = ScaffoldMessenger.of(context);
+    final scaf = ScaffoldMessenger.of(context);
     final ImagePicker picker = ImagePicker();
     // Pick images for question; may need to add option to choose a pdf
     final List<XFile>? image = await picker.pickMultiImage();
