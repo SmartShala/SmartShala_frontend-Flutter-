@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 /// question number and their options
 
 class TestOptions extends StatefulWidget {
-  final int? questionnum;
-  const TestOptions({Key? key, this.questionnum}) : super(key: key);
+  final int questionnum;
+  const TestOptions({Key? key, required this.questionnum}) : super(key: key);
 
   @override
   State<TestOptions> createState() => _TestOptionsState();
