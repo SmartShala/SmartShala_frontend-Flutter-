@@ -52,7 +52,9 @@ class _TestOptionsState extends State<TestOptions> {
 /// class to build a scrollable listview on-demand
 
 class TestCreationPage extends StatefulWidget {
-  const TestCreationPage({Key? key}) : super(key: key);
+  final int totalQuestions;
+  const TestCreationPage({Key? key, required this.totalQuestions})
+      : super(key: key);
 
   @override
   State<TestCreationPage> createState() => _TestCreationPageState();
@@ -66,9 +68,11 @@ class _TestCreationPageState extends State<TestCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Create Test')),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.send)),
       body: ListView.builder(
           // TODO: Get the question number from the previous page
-          itemCount: 30,
+          itemCount: widget.totalQuestions,
           itemBuilder: (context, index) {
             return Column(children: [
               TestOptions(questionnum: index + 1),
