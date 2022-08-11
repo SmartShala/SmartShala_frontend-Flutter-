@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 Widget getPaddedText(String label,
     {required TextEditingController controller,
     double px = 8,
-    double py = 16}) {
+    double py = 16,
+    bool outlineborder = true}) {
   /// Generate padded textform widgets with default padding parameters
   /// to avoid unnecessary duplicating
 
@@ -21,7 +22,7 @@ Widget getPaddedText(String label,
         return null;
       },
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
+        border: outlineborder ? const OutlineInputBorder() : null,
         labelText: label,
       ),
     ),
