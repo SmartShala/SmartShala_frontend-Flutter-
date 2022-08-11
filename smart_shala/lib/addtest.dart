@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'test_creation.dart';
 import 'models/testdetailsmodel.dart';
+import 'utils/padded_text.dart';
+import 'utils/api_func.dart';
 
 class TestDetails extends StatefulWidget {
   const TestDetails({Key? key}) : super(key: key);
@@ -45,9 +44,9 @@ class _TestDetailsState extends State<TestDetails> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // Test Name Field
-              _getPaddedText('Test Name', controller: name),
+              getPaddedText('Test Name', controller: name),
               // Test Description Field
-              _getPaddedText('Description', controller: desc),
+              getPaddedText('Description', controller: desc),
               // Year and Section Row
               Padding(
                 padding:
@@ -108,7 +107,7 @@ class _TestDetailsState extends State<TestDetails> {
                 ),
               ),
               // Test Topic Field
-              _getPaddedText('Topic', controller: topic),
+              getPaddedText('Topic', controller: topic),
 
               // Question Number Field
               Padding(
@@ -145,12 +144,14 @@ class _TestDetailsState extends State<TestDetails> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formkey.currentState!.validate()) {
-                        _sendDetailsToApi(TestDetailsModel(
-                            name: name.text,
-                            desc: desc.text,
-                            year: year!,
-                            sec: section!,
-                            topic: topic.text));
+                        sendDetailsToApi(
+                            TestDetailsModel(
+                                name: name.text,
+                                desc: desc.text,
+                                year: year!,
+                                sec: section!,
+                                topic: topic.text),
+                            apiUrl: 'http://parikshana.live/');
 
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) => TestCreationPage(
@@ -171,49 +172,5 @@ class _TestDetailsState extends State<TestDetails> {
         ),
       ),
     );
-  }
-
-  void _sendDetailsToApi(TestDetailsModel model) {
-    // TODO: Send model to api
-    log(model.toJson().toString());
-  }
-
-  Widget _getPaddedText(String label,
-      {required TextEditingController controller,
-      double px = 8,
-      double py = 16}) {
-    /// Generate padded textform widgets with default padding parameters
-    /// to avoid unnecessary duplicating
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: px, vertical: py),
-      child: TextFormField(
-        controller: controller,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Required Field';
-          }
-          if (value.length < 3) {
-            return 'Too short';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: label,
-        ),
-      ),
-    );
-  }
-
-  Future<List<XFile>?> imageSelectorGallery() async {
-    final scaf = ScaffoldMessenger.of(context);
-    final ImagePicker picker = ImagePicker();
-    // Pick images for question; may need to add option to choose a pdf
-    final List<XFile>? image = await picker.pickMultiImage();
-    // TODO: Use the image for upload
-    setState(() {});
-    scaf.showSnackBar(const SnackBar(content: Text('Image Selected')));
-    return image;
   }
 }
