@@ -1,41 +1,30 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'utils/padded_text.dart';
+import 'models/question_data.dart';
 
-/// Stateful class that is reponsible to create the individual rows of
+/// Stateful class that is reponsible to create the individual blocks of
 /// question number and their options
+/// A custom widget to render one question, with question data class
+/// passed by reference and controllers installed
 
 class TestOptions extends StatefulWidget {
   final int questionnum;
-  const TestOptions({Key? key, required this.questionnum}) : super(key: key);
+  final QuestionData questionData;
+  const TestOptions(
+      {Key? key, required this.questionnum, required this.questionData})
+      : super(key: key);
 
   @override
   State<TestOptions> createState() => _TestOptionsState();
 }
 
 class _TestOptionsState extends State<TestOptions> {
-  String correctAns = 'A';
-  static const opts = ['A', 'B', 'C', 'D'];
-  final question = TextEditingController();
-  final optControllers = opts.map((e) => TextEditingController()).toList();
-
-  @override
-  void dispose() {
-    question.dispose();
-    for (TextEditingController c in optControllers) {
-      c.dispose();
-    }
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    /// Container holds both the question number and the option radios
-    /// to give them padding as a whole
-
-    // TODO: Save the options in an attribute
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
-      height: 530,
+      height: 550,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Flexible(
           child: Text(
@@ -48,58 +37,62 @@ class _TestOptionsState extends State<TestOptions> {
           ),
         ),
         SizedBox(
-            width: 400, child: getPaddedText('Question', controller: question)),
-        for (int i = 0; i < opts.length; i++)
+            width: 400,
+            child: getPaddedText('Question',
+                controller: widget.questionData.question)),
+        for (int i = 0; i < QuestionData.opts.length; i++)
           SizedBox(
             child: Row(children: [
-              Text('${opts[i]})'),
+              Text('${QuestionData.opts[i]})'),
               SizedBox(
                 width: 300,
-                child: getPaddedText('Option ${opts[i]}',
-                    controller: optControllers[i], outlineborder: false),
+                child: getPaddedText('Option ${QuestionData.opts[i]}',
+                    controller: widget.questionData.optControllers[i],
+                    outlineborder: false),
               ),
             ]),
           ),
-        Row(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Correct Option:'),
-            ),
-            SizedBox(
-              width: 30,
-              child: DropdownButton<String>(
-                value: correctAns,
-                icon: const Icon(Icons.arrow_circle_down, size: 18),
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
-                ),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    correctAns = newValue!;
-                  });
-                },
-                items: <String>['A', 'B', 'C', 'D']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+
+        // Correct Option Dropdown with label
+        Row(children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Correct Option:'),
+          ),
+          SizedBox(
+            width: 30,
+            child: DropdownButton<String>(
+              value: widget.questionData.correctAns,
+              icon: const Icon(Icons.check_box_outlined, size: 18),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
               ),
+              onChanged: (String? newValue) {
+                setState(() {
+                  widget.questionData.correctAns = newValue!;
+                });
+              },
+              items: QuestionData.opts
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-          ],
-        ),
+          ),
+        ]),
       ]),
     );
   }
 }
 
-/// Stateful class responsible to leverage the use of individual test options
-/// class to build a scrollable listview on-demand
+/// Stateful class responsible to use individual question blocks
+/// to build a scrollable listview, save data in question data model; serve
+/// to api on button press
 
 class TestCreationPage extends StatefulWidget {
   final int totalQuestions;
@@ -111,21 +104,35 @@ class TestCreationPage extends StatefulWidget {
 }
 
 class _TestCreationPageState extends State<TestCreationPage> {
-  /// This page contains a listview of 4 radio buttons signifying
-  /// options a,b,c,d for each question; question number
-  /// was specified in the previous page
+  List<QuestionData> dataList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < widget.totalQuestions; i++) {
+      dataList.add(QuestionData());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Create Test')),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.send)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            for (QuestionData c in dataList) {
+              log(c.toJson().toString());
+            }
+          },
+          child: const Icon(Icons.send)),
       body: ListView.builder(
-          // TODO: Get the question number from the previous page
           itemCount: widget.totalQuestions,
           itemBuilder: (context, index) {
             return Column(children: [
-              TestOptions(questionnum: index + 1),
+              TestOptions(
+                questionnum: index + 1,
+                questionData: dataList[index],
+              ),
               const Divider(
                 thickness: 2,
                 indent: 9,
