@@ -3,20 +3,10 @@ import 'package:flutter/material.dart';
 import 'utils/padded_text.dart';
 import 'models/question_data.dart';
 
-/*
-Create item class that stores all the text controllers and variables 
-to store inputs for each question
-
-Create a widget to render one question, with item passed by reference
-and controllers installed
-
-Create total items as number of questions, in listview builder create question
-widget with item class supplied.
-
-
-*/
-/// Stateful class that is reponsible to create the individual rows of
+/// Stateful class that is reponsible to create the individual blocks of
 /// question number and their options
+/// A custom widget to render one question, with question data class
+/// passed by reference and controllers installed
 
 class TestOptions extends StatefulWidget {
   final int questionnum;
@@ -100,8 +90,9 @@ class _TestOptionsState extends State<TestOptions> {
   }
 }
 
-/// Stateful class responsible to leverage the use of individual test options
-/// class to build a scrollable listview on-demand
+/// Stateful class responsible to use individual question blocks
+/// to build a scrollable listview, save data in question data model; serve
+/// to api on button press
 
 class TestCreationPage extends StatefulWidget {
   final int totalQuestions;
@@ -113,9 +104,6 @@ class TestCreationPage extends StatefulWidget {
 }
 
 class _TestCreationPageState extends State<TestCreationPage> {
-  /// This page contains a listview of 4 radio buttons signifying
-  /// options a,b,c,d for each question; question number
-  /// was specified in the previous page
   List<QuestionData> dataList = [];
 
   @override

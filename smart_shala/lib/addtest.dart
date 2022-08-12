@@ -4,6 +4,8 @@ import 'models/testdetailsmodel.dart';
 import 'utils/padded_text.dart';
 import 'utils/api_func.dart';
 
+/// Get the test details from the user and send to api;
+/// then display the test creation page
 class TestDetails extends StatefulWidget {
   const TestDetails({Key? key}) : super(key: key);
 
@@ -142,6 +144,7 @@ class _TestDetailsState extends State<TestDetails> {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
+                  // On callback validate the form and send the details to api
                     onPressed: () {
                       if (_formkey.currentState!.validate()) {
                         sendDetailsToApi(
