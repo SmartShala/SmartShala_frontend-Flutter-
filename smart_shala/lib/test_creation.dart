@@ -60,6 +60,8 @@ class _TestOptionsState extends State<TestOptions> {
               ),
             ]),
           ),
+
+        // Correct Option Dropdown with label
         Row(
           children: [
             const Padding(
@@ -70,7 +72,7 @@ class _TestOptionsState extends State<TestOptions> {
               width: 30,
               child: DropdownButton<String>(
                 value: correctAns,
-                icon: const Icon(Icons.arrow_circle_down, size: 18),
+                icon: const Icon(Icons.check_box_outlined, size: 18),
                 elevation: 16,
                 style: const TextStyle(color: Colors.deepPurple),
                 underline: Container(
@@ -81,6 +83,7 @@ class _TestOptionsState extends State<TestOptions> {
                   setState(() {
                     correctAns = newValue!;
                   });
+                  print(getMapData());
                 },
                 items: <String>['A', 'B', 'C', 'D']
                     .map<DropdownMenuItem<String>>((String value) {
@@ -96,6 +99,14 @@ class _TestOptionsState extends State<TestOptions> {
       ]),
     );
   }
+
+  Map<String, dynamic> getMapData() => {
+        /// Get the map or json serializable structure for questions,
+        /// options and correct answers
+        'question': question.text,
+        'opts': optControllers.map((e) => e.text).toList(),
+        'correct': correctAns,
+      };
 }
 
 /// Stateful class responsible to leverage the use of individual test options
@@ -114,6 +125,7 @@ class _TestCreationPageState extends State<TestCreationPage> {
   /// This page contains a listview of 4 radio buttons signifying
   /// options a,b,c,d for each question; question number
   /// was specified in the previous page
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
