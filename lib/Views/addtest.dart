@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'test_creation.dart';
-import 'models/testdetailsmodel.dart';
-import 'utils/padded_text.dart';
-import 'utils/api_func.dart';
+import '../models/testdetailsmodel.dart';
+import '../utils/padded_text.dart';
+import '../utils/api_func.dart';
 
 /// Get the test details from the user and send to api;
 /// then display the test creation page

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'utils/image_selector.dart';
+import '../utils/image_selector.dart';
 
 class OcrPage extends StatelessWidget {
   const OcrPage({Key? key}) : super(key: key);
