@@ -34,3 +34,6 @@
             android:value="2" />
     </application>
 </manifest>
+<manifest xmlns:android="...">
+  <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>
