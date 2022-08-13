@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/icon_data.dart';
 import 'package:smart_shala/dash.dart';
 
 import 'package:smart_shala/login.dart';
@@ -11,7 +10,7 @@ class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
@@ -19,10 +18,10 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     // testpage(),
     const LoginView(),
-    ocrpage(),
     const Dashboard(title: 'Dashboard'),
+    const OcrPage(),
     const TestDetails(),
-    ocrpage(),
+    const LoginView(),
   ];
 
   @override
@@ -45,21 +44,21 @@ class _MainPageState extends State<MainPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.article),
-              label: 'tests',
+              label: 'Tests',
               backgroundColor: Colors.green,
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.chat),
-                label: 'ocr',
+                icon: Icon(Icons.camera_outlined),
+                label: 'OCR',
                 backgroundColor: Colors.blue),
             BottomNavigationBarItem(
               icon: Icon(Icons.add),
-              label: 'addtest',
+              label: 'Add Test',
               backgroundColor: Colors.green,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'login',
+              label: 'Login',
               backgroundColor: Colors.blue,
             ),
           ],
