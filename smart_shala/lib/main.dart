@@ -19,7 +19,7 @@ void main() {
       splash: Center(
         child: Image.asset('images/logo.jpeg'),
       ),
-      nextScreen: const MainPage(),
+      nextScreen: const LoginView(),
     ),
     routes: {
       '/login/': (context) => const LoginView(),
