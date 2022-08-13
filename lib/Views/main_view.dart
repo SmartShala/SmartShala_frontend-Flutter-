@@ -21,7 +21,6 @@ class _MainPageState extends State<MainPage> {
     // const LoginView(),
     const Homepage_view(),
     const Dashboard(title: 'Dashboard'),
-    const OcrPage(),
     const TestDetails(),
   ];
 
