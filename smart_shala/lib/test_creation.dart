@@ -117,7 +117,7 @@ class _TestCreationPageState extends State<TestCreationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Test')),
+      appBar: AppBar(title: const Text('Set Question Paper')),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             for (QuestionData c in dataList) {
