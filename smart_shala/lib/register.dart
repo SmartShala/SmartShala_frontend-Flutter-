@@ -141,7 +141,7 @@ class _RegisterViewState extends State<RegisterView> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/login/');
+                                Navigator.pop(context);
                               },
                               style: const ButtonStyle(),
                               child: const Text(

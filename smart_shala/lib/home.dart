@@ -17,9 +17,10 @@ class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
     // testpage(),
-    const LoginView(),
+    // const LoginView(),
     const Dashboard(title: 'Dashboard'),
     const OcrPage(),
+    const Dashboard(title: 'Dashboard'),
     const TestDetails(),
     const LoginView(),
   ];
