@@ -156,7 +156,7 @@ class _TestDetailsState extends State<TestDetails> {
                                   desc: desc.text,
                                   year: year!,
                                   sec: section!,
-                                  topic: topic.text),
+                                  topic: topic.text).toJson(),
                               apiUrl: 'http://parikshana.live/');
 
                           Navigator.of(context).push(MaterialPageRoute(

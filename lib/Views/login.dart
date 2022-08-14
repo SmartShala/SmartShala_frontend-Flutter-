@@ -8,13 +8,15 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final _emailCtrl = TextEditingController();
+  final _passCtrl  = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: Stack(
         children: [
-          Container(),
           Container(
             padding: const EdgeInsets.only(left: 35, top: 130),
             child: const Text(
@@ -34,6 +36,7 @@ class _LoginViewState extends State<LoginView> {
                     child: Column(
                       children: [
                         TextField(
+                          controller: _emailCtrl,
                           style: const TextStyle(color: Colors.black),
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -48,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
                           height: 30,
                         ),
                         TextField(
-                          style: const TextStyle(),
+                          controller: _passCtrl,
                           autocorrect: false,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -95,7 +98,6 @@ class _LoginViewState extends State<LoginView> {
                               onPressed: () {
                                 Navigator.pushNamed(context, '/register/');
                               },
-                              style: const ButtonStyle(),
                               child: const Text(
                                 'Don\'t have an account? Sign Up',
                                 textAlign: TextAlign.left,
@@ -109,7 +111,7 @@ class _LoginViewState extends State<LoginView> {
                         )
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

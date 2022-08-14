@@ -1,10 +1,11 @@
 import 'dart:developer';
 
-void sendDetailsToApi(var model, {required String apiUrl}) {
+void sendDetailsToApi(Map<String, dynamic> json, {required String apiUrl}) {
   // TODO: Send model to api
-  log(model.toJson().toString());
+  log(json.toString());
 }
 
-void fetchApi({required apiUrl}) {
+Map<String, dynamic> fetchApi({required apiUrl}) {
   // TODO: Hit api and fetch response
+  return {};
 }
