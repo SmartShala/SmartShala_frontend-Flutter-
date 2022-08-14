@@ -56,24 +56,7 @@ class _RegisterViewState extends State<RegisterView> {
               TextField(
                 style: const TextStyle(color: Colors.white),
                 controller: _nameCtrl,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    hintText: "Name",
-                    hintStyle: const TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
+                decoration: _getDecor('Name'),
               ),
               const SizedBox(
                 height: 30,
@@ -83,50 +66,16 @@ class _RegisterViewState extends State<RegisterView> {
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
                 controller: _emailCtrl,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    hintText: "Email",
-                    hintStyle: const TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
+                decoration: _getDecor('Email'),
               ),
               const SizedBox(
                 height: 30,
               ),
               TextField(
                 style: const TextStyle(color: Colors.white),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.phone,
                 controller: _contactCtrl,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    hintText: "Contact",
-                    hintStyle: const TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
+                decoration: _getDecor('Contact'),
               ),
               const SizedBox(
                 height: 30,
@@ -134,24 +83,7 @@ class _RegisterViewState extends State<RegisterView> {
               TextField(
                 style: const TextStyle(color: Colors.white),
                 controller: _teacherIdCtrl,
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.white,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                    hintText: "Teacher ID",
-                    hintStyle: const TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
+                decoration: _getDecor('Teacher ID'),
               ),
               const SizedBox(
                 height: 30,
@@ -161,25 +93,7 @@ class _RegisterViewState extends State<RegisterView> {
                 style: const TextStyle(color: Colors.white),
                 obscureText: true,
                 controller: _passwordCtrl,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Colors.black,
-                    ),
-                  ),
-                  hintText: "Password",
-                  hintStyle: const TextStyle(color: Colors.white),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                decoration: _getDecor('Password'),
               ),
               const SizedBox(
                 height: 20,
@@ -206,6 +120,26 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  void registerCallback() {
+  void registerCallback() {}
+
+  static InputDecoration _getDecor(String label) {
+    return InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Colors.white,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Colors.black,
+          ),
+        ),
+        hintText: label,
+        hintStyle: const TextStyle(color: Colors.white),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ));
   }
 }
