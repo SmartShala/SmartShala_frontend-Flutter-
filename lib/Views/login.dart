@@ -77,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                                   color: Colors.white,
                                   onPressed: () {
                                     Navigator.of(context)
-                                        .pushReplacementNamed('/home/');
+                                        .pushReplacementNamed('/mainpage/');
                                   },
                                   icon: const Icon(
                                     Icons.arrow_forward,

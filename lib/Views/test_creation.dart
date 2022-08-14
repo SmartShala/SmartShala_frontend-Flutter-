@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'utils/padded_text.dart';
-import 'models/question_data.dart';
+import '../utils/padded_text.dart';
+import '../models/question_data.dart';
 
 /// Stateful class that is reponsible to create the individual blocks of
 /// question number and their options

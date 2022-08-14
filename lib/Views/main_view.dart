@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shala/dash.dart';
+import 'package:smart_shala/Views/dash.dart';
+import 'package:smart_shala/Views/home.dart';
 
-import 'package:smart_shala/login.dart';
-import 'package:smart_shala/ocr.dart';
-import 'package:smart_shala/test.dart';
+import 'package:smart_shala/Views/login.dart';
+import 'package:smart_shala/Views/ocr.dart';
+import 'package:smart_shala/Views/test.dart';
 import 'addtest.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,11 +19,9 @@ class _MainPageState extends State<MainPage> {
   final screens = [
     // testpage(),
     // const LoginView(),
-    const Dashboard(title: 'Dashboard'),
-    const OcrPage(),
+    const Homepage_view(),
     const Dashboard(title: 'Dashboard'),
     const TestDetails(),
-    const LoginView(),
   ];
 
   @override

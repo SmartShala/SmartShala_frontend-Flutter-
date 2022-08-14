@@ -128,12 +128,12 @@ class Testlist extends StatelessWidget {
         final item = tests[index];
         return Center(
           child: Container(
-            height: 570.0,
-            width: 400.0,
+            height: 640.0,
+            width: 370.0,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 8, 216, 231),
+              color: Colors.blueGrey,
               border: Border.all(
-                color: Colors.black,
+                color: Colors.white,
               ),
               borderRadius: BorderRadius.circular(30.0),
             ),
@@ -143,7 +143,7 @@ class Testlist extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
-                        .copyWith(color: Colors.white)),
+                        .copyWith(color: Color.fromARGB(255, 2, 25, 44))),
                 const SizedBox(
                   height: 20,
                 ),
@@ -160,6 +160,17 @@ class Testlist extends StatelessWidget {
                         .textTheme
                         .headline4!
                         .copyWith(color: Colors.white)),
+                const SizedBox(
+                  height: 50,
+                ),
+                IconButton(
+                    iconSize: 100,
+                    onPressed: (() {
+                      Navigator.pushNamed(context, '/camera/');
+                    }),
+                    icon: Image.asset(
+                      'images/scan-page-512.jpg',
+                    ))
               ],
             ),
           ),
