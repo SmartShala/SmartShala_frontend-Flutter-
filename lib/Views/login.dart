@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+/*
+
+get email and password from user
+hit api with these
+get refresh and access token
+store in shared_prefs
+
+*/
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -9,7 +18,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _emailCtrl = TextEditingController();
-  final _passCtrl  = TextEditingController();
+  final _passCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +87,7 @@ class _LoginViewState extends State<LoginView> {
                               backgroundColor: const Color(0xff4c505b),
                               child: IconButton(
                                   color: Colors.white,
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .pushReplacementNamed('/mainpage/');
-                                  },
+                                  onPressed: loginCallback,
                                   icon: const Icon(
                                     Icons.arrow_forward,
                                   )),
@@ -119,5 +125,9 @@ class _LoginViewState extends State<LoginView> {
         ],
       ),
     );
+  }
+
+  void loginCallback() {
+    Navigator.of(context).pushReplacementNamed('/mainpage/');
   }
 }
