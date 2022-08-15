@@ -3,18 +3,19 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:edge_detection/edge_detection.dart';
 
-Future<void> main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
+// Future<void> main() async {
+//   // Ensure that plugin services are initialized so that `availableCameras()`
+//   // can be called before `runApp()`
+//   WidgetsFlutterBinding.ensureInitialized();
 
-  // Obtain a list of the available cameras on the device.
-  // final cameras = await availableCameras();
+//   // Obtain a list of the available cameras on the device.
+//   // final cameras = await availableCameras();
 
-  // // Get a specific camera from the list of available cameras.
-  // final firstCamera = cameras.first;
-}
+//   // // Get a specific camera from the list of available cameras.
+//   // final firstCamera = cameras.first;
+// }
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
+      appBar: AppBar(title: const Text('Scan')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -89,6 +90,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             final image = await _controller.takePicture();
 
             if (!mounted) return;
+
+            //Make sure to await the call to detectEdge
 
             //If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(

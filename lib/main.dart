@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_shala/Views/camera.dart';
 import 'package:smart_shala/Views/dash.dart';
 import 'package:smart_shala/Views/home.dart';
+import 'package:smart_shala/Views/edgedetection.dart';
 import 'Views/login.dart';
 import 'Views/register.dart';
 import 'Views/main_view.dart';
@@ -45,7 +46,8 @@ Future<void> main() async {
       '/mainpage/': (context) => const MainPage(),
       '/dashboard/': (context) => const Dashboard(title: "Dashboard"),
       '/hom/': (context) => const Homepage_view(),
-      '/camera/': (context) => TakePictureScreen(camera: firstCamera)
+      '/camera/': (context) => TakePictureScreen(camera: firstCamera),
+      '/edgecamera/': (context) => EgeCam(),
     },
   ));
 }

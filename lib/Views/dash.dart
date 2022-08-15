@@ -166,7 +166,7 @@ class Testlist extends StatelessWidget {
                 IconButton(
                     iconSize: 100,
                     onPressed: (() {
-                      Navigator.pushNamed(context, '/camera/');
+                      Navigator.pushNamed(context, '/edgecamera/');
                     }),
                     icon: Image.asset(
                       'images/scan-page-512.jpg',
