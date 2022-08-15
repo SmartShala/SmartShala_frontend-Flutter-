@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+/// General utility functions to handle api calls
+/// NOTE: Errors are not handled, handle in caller
+
 Future<Map<String, dynamic>> getFromApi({required String apiUrl}) async {
   /// Issue a get request
   final response = await http.get(Uri.parse(apiUrl));

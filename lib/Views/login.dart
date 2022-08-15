@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/validators.dart' as valid;
 
 /*
 
@@ -19,6 +20,14 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,66 +49,71 @@ class _LoginViewState extends State<LoginView> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Container(
                 margin: const EdgeInsets.only(left: 35, right: 35),
-                child: Column(children: [
-                  TextField(
-                    controller: _emailCtrl,
-                    style: const TextStyle(color: Colors.black),
-                    autocorrect: false,
-                    decoration: _getDecor('Email'),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  TextField(
-                    controller: _passCtrl,
-                    autocorrect: false,
-                    obscureText: true,
-                    decoration: _getDecor('Password'),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Sign in',
-                        style: TextStyle(
-                            fontSize: 27, fontWeight: FontWeight.w700),
-                      ),
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: const Color(0xff4c505b),
-                        child: IconButton(
-                            color: Colors.white,
-                            onPressed: loginCallback,
-                            icon: const Icon(
-                              Icons.arrow_forward,
-                            )),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Row(
+                child: Form(
+                  key: _formkey,
+                  child: Column(children: [
+                    TextFormField(
+                      controller: _emailCtrl,
+                      validator: valid.isEmail,
+                      style: const TextStyle(color: Colors.black),
+                      autocorrect: false,
+                      decoration: _getDecor('Email'),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    TextFormField(
+                      validator: valid.isShort,
+                      controller: _passCtrl,
+                      autocorrect: false,
+                      obscureText: true,
+                      decoration: _getDecor('Password'),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/register/');
-                          },
-                          child: const Text(
-                            'Don\'t have an account? Sign Up',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Color(0xff4c505b),
-                                fontSize: 18),
-                          ),
+                        const Text(
+                          'Sign in',
+                          style: TextStyle(
+                              fontSize: 27, fontWeight: FontWeight.w700),
                         ),
-                      ]),
-                ]),
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: const Color(0xff4c505b),
+                          child: IconButton(
+                              color: Colors.white,
+                              onPressed: loginCallback,
+                              icon: const Icon(
+                                Icons.arrow_forward,
+                              )),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/register/');
+                            },
+                            child: const Text(
+                              'Don\'t have an account? Sign Up',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Color(0xff4c505b),
+                                  fontSize: 18),
+                            ),
+                          ),
+                        ]),
+                  ]),
+                ),
               ),
             ]),
           ),
@@ -109,7 +123,9 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void loginCallback() {
-    Navigator.of(context).pushReplacementNamed('/mainpage/');
+    if (_formkey.currentState!.validate()) {
+      Navigator.of(context).pushReplacementNamed('/mainpage/');
+    }
   }
 
   static InputDecoration _getDecor(String label) {
