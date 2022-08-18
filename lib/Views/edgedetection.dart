@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:edge_detection/edge_detection.dart';
@@ -9,7 +10,7 @@ class EgeCam extends StatefulWidget {
   const EgeCam({Key? key}) : super(key: key);
 
   @override
-  _EgeCamState createState() => _EgeCamState();
+  State<EgeCam> createState() => _EgeCamState();
 }
 FabFloatOffsetY
 class _EgeCamState extends State<EgeCam> {
@@ -27,7 +28,7 @@ class _EgeCamState extends State<EgeCam> {
     // We also handle the message potentially returning null.
     try {
       imagePath = (await EdgeDetection.detectEdge);
-      print("$imagePath");
+      log("$imagePath");
     } on PlatformException catch (e) {
       imagePath = e.toString();
     }

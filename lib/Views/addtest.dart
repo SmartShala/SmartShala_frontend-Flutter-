@@ -150,13 +150,13 @@ class _TestDetailsState extends State<TestDetails> {
                       // On callback validate the form and send the details to api
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
-                          sendDetailsToApi(
+                          postToApi(
                               TestDetailsModel(
                                   name: name.text,
                                   desc: desc.text,
                                   year: year!,
                                   sec: section!,
-                                  topic: topic.text),
+                                  topic: topic.text).toJson(),
                               apiUrl: 'http://parikshana.live/');
 
                           Navigator.of(context).push(MaterialPageRoute(
