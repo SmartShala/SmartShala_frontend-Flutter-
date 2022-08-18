@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
-class Homepage_view extends StatefulWidget {
-  const Homepage_view({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<Homepage_view> createState() => _Homepage_viewState();
+  State<HomePage> createState() => _HomePage();
 }
 
-class _Homepage_viewState extends State<Homepage_view> {
+class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container();

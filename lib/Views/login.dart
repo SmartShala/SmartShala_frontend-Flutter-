@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../api/login_api.dart';
+import '../progress_hud.dart';
+import '../models/login_model.dart';
 import '../utils/validators.dart' as valid;
 
 /*
@@ -21,6 +25,7 @@ class _LoginViewState extends State<LoginView> {
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+  bool _isApiCallInProgress = false;
 
   @override
   void dispose() {
@@ -31,6 +36,14 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    return ProgressHUD(
+      inAsyncCall: _isApiCallInProgress,
+      opacity: 0.3,
+      child: _uiSetup(context),
+    );
+  }
+
+  Widget _uiSetup(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: Stack(children: [
@@ -124,7 +137,33 @@ class _LoginViewState extends State<LoginView> {
 
   void loginCallback() {
     if (_formkey.currentState!.validate()) {
-      Navigator.of(context).pushReplacementNamed('/mainpage/');
+      setState(() {
+        _isApiCallInProgress = true;
+      });
+
+      LoginApi loginApi = LoginApi();
+      loginApi
+          .login(LoginRequestModel(
+              email: _emailCtrl.text.trim(), password: _passCtrl.text))
+          .then((value) async {
+        setState(() {
+          _isApiCallInProgress = false;
+        });
+        if (value.access.isNotEmpty) {
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.setString('access', value.access);
+          sharedPreferences.setString('refresh', value.refresh);
+
+          if (!mounted) return;
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Login Successful')));
+          Navigator.of(context).pushReplacementNamed('/mainpage/');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('User not registered')));
+        }
+      });
     }
   }
 
