@@ -145,11 +145,17 @@ class _LoginViewState extends State<LoginView> {
       loginApi
           .login(LoginRequestModel(
               email: _emailCtrl.text.trim(), password: _passCtrl.text))
-          .then((value) {
+          .then((value) async {
         setState(() {
           _isApiCallInProgress = false;
         });
         if (value.access.isNotEmpty) {
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.setString('access', value.access);
+          sharedPreferences.setString('refresh', value.refresh);
+
+          if (!mounted) return;
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Login Successful')));
           Navigator.of(context).pushReplacementNamed('/mainpage/');

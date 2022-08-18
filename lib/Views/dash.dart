@@ -19,7 +19,6 @@ Future<List<Upcoming>> fetchTests(http.Client client) async {
   // print(response.body);
   // Use the compute function to run parseTests in a separate isolate.
   // print(response);
-  print(response.body);
   return compute(parseTests, response.body);
 }
 
@@ -78,7 +77,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 1, 21, 37),
+        backgroundColor: const Color.fromARGB(255, 1, 21, 37),
         title: Text(title),
       ),
       body: FutureBuilder<List<Upcoming>>(
@@ -143,7 +142,7 @@ class Testlist extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
-                        .copyWith(color: Color.fromARGB(255, 2, 25, 44))),
+                        .copyWith(color: const Color.fromARGB(255, 2, 25, 44))),
                 const SizedBox(
                   height: 20,
                 ),

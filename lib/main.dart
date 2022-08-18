@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:camera/camera.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_shala/Views/camera.dart';
 import 'package:smart_shala/Views/dash.dart';
@@ -24,6 +25,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
 
+  // get login instance
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  var accessToken = sharedPreferences.getString('access');
+
   // // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.first;
   runApp(MaterialApp(
@@ -38,16 +44,19 @@ Future<void> main() async {
       splash: Center(
         child: Image.asset('images/logo.jpeg'),
       ),
-      nextScreen: const LoginView(),
+      // if logged in, redirect to main page, else to login page
+      nextScreen: (accessToken != null && accessToken.isNotEmpty)
+          ? const MainPage()
+          : const LoginView(),
     ),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
       '/mainpage/': (context) => const MainPage(),
       '/dashboard/': (context) => const Dashboard(title: "Dashboard"),
-      '/hom/': (context) => const Homepage_view(),
+      '/home/': (context) => const HomePage(),
       '/camera/': (context) => TakePictureScreen(camera: firstCamera),
-      '/edgecamera/': (context) => EgeCam(),
+      '/edgecamera/': (context) => const EgeCam(),
     },
   ));
 }
