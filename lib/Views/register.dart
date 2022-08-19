@@ -1,4 +1,9 @@
+import 'dart:developer';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:smart_shala/api/register_api.dart';
+import 'package:smart_shala/models/register_model.dart';
+import '../progress_hud.dart';
 import '../utils/validators.dart' as valid;
 
 /*
@@ -25,6 +30,7 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _passwordCtrl = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
+  bool _isApiCallInProgress = false;
 
   @override
   void dispose() {
@@ -38,6 +44,14 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    return ProgressHUD(
+      inAsyncCall: _isApiCallInProgress,
+      opacity: 0.3,
+      child: _uiSetup(context),
+    );
+  }
+
+  Widget _uiSetup(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown,
       appBar: AppBar(
@@ -146,11 +160,46 @@ class _RegisterViewState extends State<RegisterView> {
   void registerCallback() {
     /// Logic to handle api request callback on button press
     if (_formkey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Registering User'),
-        ),
-      );
+      setState(() {
+        _isApiCallInProgress = true;
+      });
+
+      RegisterApi register = RegisterApi();
+      register
+          .register(RegisterRequestModel(
+              name: _nameCtrl.text,
+              email: _emailCtrl.text,
+              password: _passwordCtrl.text,
+              contact: int.parse(_contactCtrl.text),
+              teacherId: _teacherIdCtrl.text))
+          .then(((value) {
+        setState(() {
+          _isApiCallInProgress = false;
+        });
+        if (value.id != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('User Created Successfully'),
+            ),
+          );
+          Timer(const Duration(seconds: 2), () {
+            setState(() {
+              _isApiCallInProgress = true;
+            });
+          });
+          Timer(const Duration(seconds: 3), () {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/login/', (route) => false);
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Not created'),
+            ),
+          );
+          log(value.toJson().toString());
+        }
+      }));
     }
   }
 
