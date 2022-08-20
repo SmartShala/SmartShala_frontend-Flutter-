@@ -2,12 +2,13 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'views/dash.dart';
-import 'views/home.dart';
-import 'views/edgedetection.dart';
-import 'views/login.dart';
-import 'views/register.dart';
-import 'views/main_view.dart';
+import 'package:smart_shala/Constants/const.dart';
+import 'package:smart_shala/Views/dash.dart';
+import 'package:smart_shala/Views/home.dart';
+import 'package:smart_shala/Views/edgedetection.dart';
+import 'Views/login.dart';
+import 'Views/register.dart';
+import 'Views/main_view.dart';
 
 Future<CameraDescription> cam() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -22,6 +23,7 @@ Future<CameraDescription> cam() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // final cameras = await availableCameras();
 
   // get login instance
   final SharedPreferences sharedPreferences =
@@ -29,6 +31,7 @@ Future<void> main() async {
   var accessToken = sharedPreferences.getString('access');
 
   // // Get a specific camera from the list of available cameras.
+  // final firstCamera = cameras.first;
   runApp(MaterialApp(
     title: 'Flutter Demo',
     theme: ThemeData(
@@ -47,12 +50,12 @@ Future<void> main() async {
           : const LoginView(),
     ),
     routes: {
-      '/login/': (context) => const LoginView(),
-      '/register/': (context) => const RegisterView(),
-      '/mainpage/': (context) => const MainPage(),
-      '/dashboard/': (context) => const Dashboard(title: "Dashboard"),
-      '/home/': (context) => const HomePage(),
-      '/edgecamera/': (context) => const EgeCam(),
+      loginRoute: (context) => const LoginView(),
+      registeRoute: (context) => const RegisterView(),
+      mainpageRoute: (context) => const MainPage(),
+      testdashRoute: (context) => const Dashboard(title: "Dashboard"),
+      homeRoute: (context) => const HomePage(),
+      scanRoute: (context) => const EgeCam(),
     },
   ));
 }

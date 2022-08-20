@@ -5,14 +5,18 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_shala/Constants/const.dart';
 
 Future<List<Upcoming>> fetchTests(http.Client client) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('access');
   Map<String, String> requestHeaders = {
-    'X-Master-key':
-        '\$2b\$10\$AhFzro77.S6nmUO2cjhv8uFocHLETdLHfKaKHFCrkXO8sMJ/dW1WC',
+    'Authorization': 'Bearer $token',
   };
   final response = await client.get(
-      Uri.parse('https://api.jsonbin.io/v3/b/62eff5095c146d63ca634aea'),
+      Uri.parse(
+          'http://parikshana.smartshala.live/api/test/?page=1&page_size=10'),
       headers: requestHeaders
       // Uri.parse('https://jsonplaceholder.typicode.com/photos'),
       );
@@ -25,18 +29,18 @@ Future<List<Upcoming>> fetchTests(http.Client client) async {
 // A function that converts a response body into a List<Photo>.
 List<Upcoming> parseTests(String responseBody) {
   final parsed =
-      (jsonDecode(responseBody)['record']).cast<Map<String, dynamic>>();
+      (jsonDecode(responseBody)['results']).cast<Map<String, dynamic>>();
   return parsed.map<Upcoming>((json) => Upcoming.fromJson(json)).toList();
 }
 
 class Upcoming {
-  final int teacherid;
+  final int testid;
   final String subject;
   final String forClass;
   final String topic;
 
   const Upcoming({
-    required this.teacherid,
+    required this.testid,
     required this.subject,
     required this.forClass,
     required this.topic,
@@ -44,10 +48,10 @@ class Upcoming {
 
   factory Upcoming.fromJson(Map<String, dynamic> json) {
     return Upcoming(
-      teacherid: json['teacherid'] as int,
-      subject: json['Subject'] as String,
-      forClass: json['class'] as String,
-      topic: json['topic'] as String,
+      testid: json['id'] as int,
+      subject: json['name'] as String,
+      forClass: json['standard'] as String,
+      topic: json['description'] as String,
     );
   }
 }
@@ -165,7 +169,12 @@ class Testlist extends StatelessWidget {
                 IconButton(
                     iconSize: 100,
                     onPressed: (() {
-                      Navigator.pushNamed(context, '/edgecamera/');
+                      // Navigator.pushNamed(context, '/edgecamera/');
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        scanRoute,
+                        (route) => false,
+                        arguments: {"testid": item.testid},
+                      );
                     }),
                     icon: Image.asset(
                       'images/scan-page-512.jpg',
