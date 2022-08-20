@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_shala/Constants/const.dart';
 import '../api/login_api.dart';
 import '../progress_hud.dart';
 import '../models/login_model.dart';
@@ -114,7 +115,8 @@ class _LoginViewState extends State<LoginView> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/register/');
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  registeRoute, (route) => false);
                             },
                             child: const Text(
                               'Don\'t have an account? Sign Up',
@@ -160,7 +162,8 @@ class _LoginViewState extends State<LoginView> {
           if (!mounted) return;
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('Login Successful')));
-          Navigator.of(context).pushReplacementNamed('/mainpage/');
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(mainpageRoute, (route) => false);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('User not registered')));

@@ -1,8 +1,9 @@
 import 'dart:developer';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:smart_shala/api/register_api.dart';
-import 'package:smart_shala/models/register_model.dart';
+import '../Constants/const.dart';
+import '../api/register_api.dart';
+import '../models/register_model.dart';
 import '../progress_hud.dart';
 import '../utils/validators.dart' as valid;
 
@@ -139,7 +140,7 @@ class _RegisterViewState extends State<RegisterView> {
             TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/login/', (route) => false);
+                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
               },
               style: const ButtonStyle(),
               child: const Text(
