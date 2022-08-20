@@ -4,29 +4,6 @@ import '../models/testdetailsmodel.dart';
 import '../utils/padded_text.dart';
 import '../utils/api_func.dart';
 
-/*
-
-// test creation
-{
-  "name": "Test name (string)",
-  "description": "test description(string)",
-  "standard": 1-12(int),
-  "section": "A-K(string)",
-  "subject": "test subject(string)",
-  "topic": "test topic(string)",
-}
-
-// test data
-[
-  {
-    "question": "question statement(string)",
-    "opts": ["optionA", "optionB", "optionC", "optionD" (List of String)],
-    "correct": "A(string)"
-  }
-]
-
-*/
-
 /// Get the test details from the user and send to api;
 /// then display the test creation page
 class TestDetails extends StatefulWidget {

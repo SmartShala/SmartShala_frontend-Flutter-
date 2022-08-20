@@ -57,7 +57,7 @@ class _MainPageState extends State<MainPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Login',
+              label: 'Profile',
               backgroundColor: Colors.blue,
             ),
           ],

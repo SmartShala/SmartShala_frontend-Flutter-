@@ -27,20 +27,20 @@ class RegisterRequestModel {
       RegisterRequestModel(
         name: json["name"],
         email: json["email"],
-    contact: json["contact"],
+        contact: json["contact"],
         teacherId: json["teacher_id"],
-          password: json["password"],
+        password: json["password"],
       );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "name": name,
-      "email": email,
+        "email": email,
         "contact": contact,
         "teacher_id": teacherId,
         "password": password,
-    };
+      };
 }
-    
+
 // ---------------  REGISTER RESPONSE MODEL  ---------------- //
 
 RegisterResponseModel registerResponseModelFromJson(String str) =>
