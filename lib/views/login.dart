@@ -1,7 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_shala/models/user_model.dart';
 import '../api/login_api.dart';
 import '../progress_hud.dart';
 import '../models/login_model.dart';
@@ -175,7 +173,6 @@ class _LoginViewState extends State<LoginView> {
       String accessToken, SharedPreferences sharedPreferences) {
     final GetUserApi getUserApi = GetUserApi();
     getUserApi.getUser(accessToken).then((value) {
-      log('this is important ${value.name} ${value.email}');
       sharedPreferences.setString('name', value.name ?? "null");
       sharedPreferences.setInt('contact', value.contact!);
       sharedPreferences.setString('email', value.email ?? "null");

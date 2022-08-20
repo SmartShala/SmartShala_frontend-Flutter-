@@ -13,32 +13,36 @@ class _UserProfileState extends State<UserProfile> {
   int? _contact;
   String? _email;
   String? _teacherId;
-
-  @override
-  void initState() {
-    _getUserDetails();
-    super.initState();
-  }
+  SharedPreferences? _sharedPreferences;
 
   void _getUserDetails() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    _sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
-      _username = sharedPreferences.getString('name');
-      _contact = sharedPreferences.getInt('contact');
-      _email = sharedPreferences.getString('email');
-      _teacherId = sharedPreferences.getString('teacher_id');
+      _username = _sharedPreferences!.getString('name');
+      _contact = _sharedPreferences!.getInt('contact');
+      _email = _sharedPreferences!.getString('email');
+      _teacherId = _sharedPreferences!.getString('teacher_id');
     });
+  }
+
+  void _clearOnLogout() async {
+    await _sharedPreferences!.clear();
   }
 
   @override
   Widget build(BuildContext context) {
+    _getUserDetails();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           onPressed: () {},
           backgroundColor: Colors.redAccent,
           child: IconButton(
             onPressed: () {
-
+              _clearOnLogout();
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/login/', (route) => false);
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Successfully Logged Out')));
             },
             icon: const Icon(Icons.logout),
           )),
