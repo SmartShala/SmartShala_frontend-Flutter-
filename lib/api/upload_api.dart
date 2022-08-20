@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
-
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,8 +10,8 @@ class UploadApi {
     var dio = Dio();
     dio.options.headers["Authorization"] = "Bearer $token";
     String fileName = file.path.split('/').last;
-    print("api");
-    print(fileName);
+    log("api");
+    log(fileName);
     FormData formData = FormData.fromMap({
       "image": await MultipartFile.fromFile(file.path, filename: fileName),
       "id": 1,
@@ -21,16 +20,16 @@ class UploadApi {
       var response = await dio.post(
           "http://parikshana.smartshala.live/api/grader/17/",
           data: formData);
-      print(response);
+      log(response.toString());
     } on DioError catch (e) {
       if (e.response != null) {
-        print(e.response);
-        //  print(e.response.headers);
-        //  print(e.response.requestOptions);
+        log(e.response.toString());
+        //  log(e.response.headers);
+        //  log(e.response.requestOptions);
       } else {
         // Something happened in setting up or sending the request that triggered an Error
-        print(e.requestOptions);
-        print(e.message);
+        log(e.requestOptions.toString());
+        log(e.message);
       }
     }
   }

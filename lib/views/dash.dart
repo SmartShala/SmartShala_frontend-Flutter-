@@ -1,76 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-// import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_shala/Constants/const.dart';
-
-Future<List<Upcoming>> fetchTests(http.Client client) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('access');
-  Map<String, String> requestHeaders = {
-    'Authorization': 'Bearer $token',
-  };
-  final response = await client.get(
-      Uri.parse(
-          'http://parikshana.smartshala.live/api/test/?page=1&page_size=10'),
-      headers: requestHeaders
-      // Uri.parse('https://jsonplaceholder.typicode.com/photos'),
-      );
-  // print(response.body);
-  // Use the compute function to run parseTests in a separate isolate.
-  // print(response);
-  return compute(parseTests, response.body);
-}
-
-// A function that converts a response body into a List<Photo>.
-List<Upcoming> parseTests(String responseBody) {
-  final parsed =
-      (jsonDecode(responseBody)['results']).cast<Map<String, dynamic>>();
-  return parsed.map<Upcoming>((json) => Upcoming.fromJson(json)).toList();
-}
-
-class Upcoming {
-  final int testid;
-  final String subject;
-  final String forClass;
-  final String topic;
-
-  const Upcoming({
-    required this.testid,
-    required this.subject,
-    required this.forClass,
-    required this.topic,
-  });
-
-  factory Upcoming.fromJson(Map<String, dynamic> json) {
-    return Upcoming(
-      testid: json['id'] as int,
-      subject: json['name'] as String,
-      forClass: json['standard'] as String,
-      topic: json['description'] as String,
-    );
-  }
-}
-
-// void main() => runApp(const MyApp());
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     const appTitle = 'Isolate Demo';
-
-//     return const MaterialApp(
-//       title: appTitle,
-//       home: Dashboard(title: appTitle),
-//     );
-//   }
-// }
+import '../constants/routes.dart';
+import '../api/dash_test_api.dart';
+import '../models/dash_testmodel.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key, required this.title});
@@ -84,7 +16,7 @@ class Dashboard extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 1, 21, 37),
         title: Text(title),
       ),
-      body: FutureBuilder<List<Upcoming>>(
+      body: FutureBuilder<List<DashTestModel>>(
         future: fetchTests(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -107,22 +39,12 @@ class Dashboard extends StatelessWidget {
 class Testlist extends StatelessWidget {
   const Testlist({super.key, required this.tests});
 
-  final List<Upcoming> tests;
+  final List<DashTestModel> tests;
 
   @override
   Widget build(BuildContext context) {
-    // return GridView.builder(
-    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 2,
-    //   ),
-    //   itemCount: tests.length,
-    //   itemBuilder: (context, index) {
-    //     return Text(tests[index].subject);
-    //   },
-    // );
     return PageView.builder(
       scrollDirection: Axis.horizontal,
-      // shrinkWrap: true,
       // Let the ListView know how many items it needs to build.
       itemCount: tests.length,
       // Provide a builder function. This is where the magic happens.

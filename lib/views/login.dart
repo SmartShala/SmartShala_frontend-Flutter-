@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_shala/Constants/const.dart';
+import '../constants/routes.dart';
 import '../api/login_api.dart';
 import '../progress_hud.dart';
 import '../models/login_model.dart';
@@ -116,7 +116,7 @@ class _LoginViewState extends State<LoginView> {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pushNamedAndRemoveUntil(
-                                  registeRoute, (route) => false);
+                                  registerRoute, (route) => false);
                             },
                             child: const Text(
                               'Don\'t have an account? Sign Up',
