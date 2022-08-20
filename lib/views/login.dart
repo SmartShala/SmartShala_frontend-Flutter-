@@ -4,6 +4,7 @@ import '../api/login_api.dart';
 import '../progress_hud.dart';
 import '../models/login_model.dart';
 import '../utils/validators.dart' as valid;
+import '../api/getuser_api.dart';
 
 /*
 
@@ -154,6 +155,7 @@ class _LoginViewState extends State<LoginView> {
               await SharedPreferences.getInstance();
           sharedPreferences.setString('access', value.access);
           sharedPreferences.setString('refresh', value.refresh);
+          _setUserDetails(value.access, sharedPreferences);
 
           if (!mounted) return;
           ScaffoldMessenger.of(context)
@@ -165,6 +167,17 @@ class _LoginViewState extends State<LoginView> {
         }
       });
     }
+  }
+
+  void _setUserDetails(
+      String accessToken, SharedPreferences sharedPreferences) {
+    final GetUserApi getUserApi = GetUserApi();
+    getUserApi.getUser(accessToken).then((value) {
+      sharedPreferences.setString('name', value.name ?? "null");
+      sharedPreferences.setInt('contact', value.contact!);
+      sharedPreferences.setString('email', value.email ?? "null");
+      sharedPreferences.setString('teacher_id', value.teacherId ?? "null");
+    });
   }
 
   static InputDecoration _getDecor(String label) {

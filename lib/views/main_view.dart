@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shala/Views/dash.dart';
-import 'package:smart_shala/Views/home.dart';
+import 'dash.dart';
+import 'home.dart';
+import 'user_profile.dart';
+import 'results.dart';
 import 'addtest.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,11 +15,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
-    // testpage(),
-    // const LoginView(),
     const HomePage(),
     const Dashboard(title: 'Dashboard'),
     const TestDetails(),
+    const ResultsPage(),
+    const UserProfile(),
   ];
 
   @override
@@ -44,17 +46,18 @@ class _MainPageState extends State<MainPage> {
               backgroundColor: Colors.green,
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.camera_outlined),
-                label: 'OCR',
-                backgroundColor: Colors.blue),
-            BottomNavigationBarItem(
               icon: Icon(Icons.add),
               label: 'Add Test',
               backgroundColor: Colors.green,
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.history_edu),
+              label: 'Results',
+              backgroundColor: Colors.green,
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Login',
+              label: 'Profile',
               backgroundColor: Colors.blue,
             ),
           ],
