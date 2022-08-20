@@ -11,7 +11,7 @@ class EgeCam extends StatefulWidget {
   const EgeCam({Key? key}) : super(key: key);
 
   @override
-  _EgeCamState createState() => _EgeCamState();
+  State<EgeCam> createState() => _EgeCamState();
 }
 
 class _EgeCamState extends State<EgeCam> {
@@ -29,7 +29,7 @@ class _EgeCamState extends State<EgeCam> {
     // We also handle the message potentially returning null.
     try {
       imagePath = (await EdgeDetection.detectEdge);
-      print("$imagePath");
+      log("$imagePath");
     } on PlatformException catch (e) {
       imagePath = e.toString();
     }
@@ -44,15 +44,13 @@ class _EgeCamState extends State<EgeCam> {
     setState(() {
       _imagePath = imagePath;
     });
-
-    // UploadApi(file: _imagePath);
   }
 
   @override
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    print(arguments['testid']);
+    log(arguments['testid']);
     return Scaffold(
       appBar: AppBar(
         title: const Text('StartScan'),
@@ -78,11 +76,6 @@ class _EgeCamState extends State<EgeCam> {
                 }),
                 child: const Text('Submit'),
               ),
-              // Text(
-              //   _imagePath.toString(),
-              //   textAlign: TextAlign.center,
-              //   style: const TextStyle(fontSize: 14),
-              // ),
             ),
             Visibility(
               visible: _imagePath != null,
@@ -100,7 +93,7 @@ class _EgeCamState extends State<EgeCam> {
   }
 
   Future<void> upload(File file) async {
-    print("started");
+    log("started");
     UploadApi uploadapi = UploadApi();
     await uploadapi.uploadImage(file);
   }
