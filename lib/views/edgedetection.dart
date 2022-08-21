@@ -48,9 +48,9 @@ class _EgeCamState extends State<EgeCam> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    log(arguments['testid']);
+    // final arguments = (ModalRoute.of(context)?.settings.arguments ??
+    //     <int, dynamic>{}) as Map;
+    // log(arguments['testid']);
     return Scaffold(
       appBar: AppBar(
         title: const Text('StartScan'),

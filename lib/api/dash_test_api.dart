@@ -27,7 +27,5 @@ Future<List<DashTestModel>> fetchTests(http.Client client) async {
 List<DashTestModel> parseTests(String responseBody) {
   final parsed =
       (jsonDecode(responseBody)['results']).cast<Map<String, dynamic>>();
-  return parsed
-      .map<DashTestModel>((json) => DashTestModel.fromJson(json))
-      .toList();
+     return parsed.map<DashTestModel>((json) => DashTestModel.fromJson(json)).toList();
 }

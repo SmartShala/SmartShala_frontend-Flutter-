@@ -2,7 +2,7 @@
 class DashTestModel {
   final int testid;
   final String subject;
-  final String forClass;
+  final int forClass;
   final String topic;
 
   const DashTestModel({
@@ -16,7 +16,7 @@ class DashTestModel {
     return DashTestModel(
       testid: json['id'] as int,
       subject: json['name'] as String,
-      forClass: json['standard'] as String,
+      forClass: json['standard'] as int,
       topic: json['description'] as String,
     );
   }
