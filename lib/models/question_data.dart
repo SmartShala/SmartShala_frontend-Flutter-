@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class QuestionData {
   static const opts = ['A', 'B', 'C', 'D'];
 
-  String correctAns = 'A';
+  int correctAns = 0;
   TextEditingController question = TextEditingController();
   List<TextEditingController> optControllers =
       opts.map((e) => TextEditingController()).toList();
@@ -22,7 +22,7 @@ class QuestionData {
         /// Get the map or json serializable structure for questions,
         /// options and correct answers
         'question': question.text,
-        'opts': optControllers.map((e) => e.text).toList(),
-        'correct': correctAns,
+        'options': optControllers.map((e) => e.text).toList(),
+        'correct_option': correctAns,
       };
 }

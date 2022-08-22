@@ -1,8 +1,12 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_shala/api/testdetails_api.dart';
+import 'package:smart_shala/models/testdetailsmodel.dart';
 import 'test_creation.dart';
-import '../models/testdetailsmodel.dart';
 import '../utils/padded_text.dart';
-import '../utils/api_func.dart';
+import '../api/substd_api.dart';
+import '../utils/validators.dart';
 
 /// Get the test details from the user and send to api;
 /// then display the test creation page
@@ -16,12 +20,35 @@ class TestDetails extends StatefulWidget {
 class _TestDetailsState extends State<TestDetails> {
   final _formkey = GlobalKey<FormState>();
 
-  int? year = 1;
-  String? section = 'A';
+  int? standard;
+  int? subject;
   final name = TextEditingController();
   final desc = TextEditingController();
   final topic = TextEditingController();
   final quesNum = TextEditingController();
+  String? _accessToken;
+  List<List<int>>? standards;
+  List<List<dynamic>>? subjects;
+
+  @override
+  void initState() {
+    _getSubAndStd();
+    super.initState();
+  }
+
+  void _getSubAndStd() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    _accessToken = sharedPreferences.getString('access');
+    SubAndStdApi substdapi = SubAndStdApi();
+    substdapi.getdata(_accessToken!).then((value) {
+      setState(() {
+        standards = value.standards;
+        subjects = value.subjects;
+      });
+      log(standards.toString());
+      log(subjects.toString());
+    });
+  }
 
   /// Override the default destructor to destruct resources taken by
   /// controllers first
@@ -60,52 +87,64 @@ class _TestDetailsState extends State<TestDetails> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Year', style: TextStyle(fontSize: 20)),
-                          DropdownButton<int?>(
-                            value: year,
-                            icon: const Icon(Icons.arrow_downward),
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
-                            ),
-                            onChanged: (int? newValue) {
-                              setState(() {
-                                year = newValue!;
-                              });
-                            },
-                            items: <int>[1, 2, 3, 4]
-                                .map<DropdownMenuItem<int?>>((value) {
-                              return DropdownMenuItem<int?>(
-                                value: value,
-                                child: Text(value.toString()),
-                              );
-                            }).toList(),
+                          const Text('Standard',
+                              style: TextStyle(fontSize: 20)),
+                          const SizedBox(
+                            width: 8,
                           ),
-                          const SizedBox(width: 90),
-                          const Text('Section', style: TextStyle(fontSize: 20)),
-                          DropdownButton<String>(
-                            value: section,
-                            icon: const Icon(Icons.arrow_circle_down, size: 18),
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
+                          SizedBox(
+                            width: 72,
+                            child: DropdownButtonFormField<int?>(
+                              hint: const Text('Choose'),
+                              value: standard,
+                              validator: (value) =>
+                                  value != null ? null : "Required",
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (int? newValue) {
+                                setState(() {
+                                  standard = newValue!;
+                                });
+                              },
+                              items: (standards ?? [])
+                                  .map<DropdownMenuItem<int?>>((value) {
+                                return DropdownMenuItem<int>(
+                                  value: value[0],
+                                  child: Text(
+                                    value[1].toString(),
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                section = newValue!;
-                              });
-                            },
-                            items: <String>['A', 'B', 'C', 'D']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                          ),
+                          const Text('Subject', style: TextStyle(fontSize: 20)),
+                          const SizedBox(width: 6),
+                          SizedBox(
+                            width: 100,
+                            child: DropdownButtonFormField<int>(
+                              hint: const Text('Choose'),
+                              validator: (value) =>
+                                  value != null ? null : "Required",
+                              value: subject,
+                              icon:
+                                  const Icon(Icons.arrow_circle_down, size: 18),
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              onChanged: (int? newValue) {
+                                setState(() {
+                                  subject = newValue!;
+                                });
+                              },
+                              items: (subjects ?? [])
+                                  .map<DropdownMenuItem<int>>((value) {
+                                return DropdownMenuItem<int>(
+                                  value: value[0],
+                                  child: Text(value[1]),
+                                );
+                              }).toList(),
+                            ),
                           )
                         ]),
                   ),
@@ -118,22 +157,7 @@ class _TestDetailsState extends State<TestDetails> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: TextFormField(
-                    validator: (value) {
-                      int intval;
-
-                      if (value == null || value.isEmpty) {
-                        return 'Required Field';
-                      }
-                      try {
-                        intval = int.parse(value);
-                      } on FormatException {
-                        return 'Non-number character input';
-                      }
-                      if (intval < 1) {
-                        return 'Invalid Question Number';
-                      }
-                      return null;
-                    },
+                    validator: isInt,
                     controller: quesNum,
                     decoration: const InputDecoration(
                         labelText: "Enter number of questions"),
@@ -148,24 +172,7 @@ class _TestDetailsState extends State<TestDetails> {
                     width: double.infinity,
                     child: ElevatedButton(
                       // On callback validate the form and send the details to api
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          postToApi(
-                              TestDetailsModel(
-                                  name: name.text,
-                                  desc: desc.text,
-                                  year: year!,
-                                  sec: section!,
-                                  topic: topic.text).toJson(),
-                              apiUrl: 'http://parikshana.live/');
-
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => TestCreationPage(
-                              totalQuestions: int.parse(quesNum.text),
-                            ),
-                          ));
-                        }
-                      },
+                      onPressed: createCallback,
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 247, 86, 75),
                       ),
@@ -179,5 +186,38 @@ class _TestDetailsState extends State<TestDetails> {
         ),
       ),
     );
+  }
+
+  void createCallback() async {
+    if (_formkey.currentState!.validate()) {
+      int? testId;
+      TestDetailsApi testDetailsApi = TestDetailsApi();
+      await testDetailsApi
+          .create(
+              TestDetailsRequestModel(
+                  name: name.text,
+                  description: desc.text,
+                  topic: topic.text,
+                  standard: standard!,
+                  subject: subject!),
+              _accessToken!)
+          .then((value) {
+        log("Response value -> ${value.toJson().toString()}");
+        testId = value.testId;
+      });
+      log("Test id -> ${testId.toString()}");
+      if (!mounted) return;
+      if (testId == null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Error creating test')));
+        return;
+      }
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => TestCreationPage(
+          totalQuestions: int.parse(quesNum.text),
+          testId: testId!,
+        ),
+      ));
+    }
   }
 }
