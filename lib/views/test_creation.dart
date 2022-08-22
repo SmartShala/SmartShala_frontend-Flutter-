@@ -96,7 +96,9 @@ class _TestOptionsState extends State<TestOptions> {
 
 class TestCreationPage extends StatefulWidget {
   final int totalQuestions;
-  const TestCreationPage({Key? key, required this.totalQuestions})
+  final int testId;
+  const TestCreationPage(
+      {Key? key, required this.totalQuestions, required this.testId})
       : super(key: key);
 
   @override
