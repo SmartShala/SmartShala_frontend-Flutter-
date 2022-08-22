@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/padded_text.dart';
 import '../models/question_data.dart';
+import '../api/testcreationapi.dart';
+import '../constants/routes.dart';
 
 /// Stateful class that is reponsible to create the individual blocks of
 /// question number and their options
@@ -61,28 +65,27 @@ class _TestOptionsState extends State<TestOptions> {
           ),
           SizedBox(
             width: 30,
-            child: DropdownButton<String>(
-              value: widget.questionData.correctAns,
-              icon: const Icon(Icons.check_box_outlined, size: 18),
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  widget.questionData.correctAns = newValue!;
-                });
-              },
-              items: QuestionData.opts
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
+            child: DropdownButton<int?>(
+                value: widget.questionData.correctAns,
+                icon: const Icon(Icons.check_box_outlined, size: 18),
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (int? newValue) {
+                  setState(() {
+                    widget.questionData.correctAns = newValue!;
+                  });
+                },
+                items: [
+                  for (int i = 0; i < QuestionData.opts.length; i++)
+                    DropdownMenuItem<int>(
+                      value: i,
+                      child: Text(QuestionData.opts[i]),
+                    )
+                ]),
           ),
         ]),
       ]),
@@ -121,12 +124,7 @@ class _TestCreationPageState extends State<TestCreationPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Set Question Paper')),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            for (QuestionData c in dataList) {
-              log(c.toJson().toString());
-            }
-          },
-          child: const Icon(Icons.send)),
+          onPressed: createCallback, child: const Icon(Icons.send)),
       body: ListView.builder(
           itemCount: widget.totalQuestions,
           itemBuilder: (context, index) {
@@ -142,6 +140,32 @@ class _TestCreationPageState extends State<TestCreationPage> {
               ),
             ]);
           }),
+    );
+  }
+
+  void createCallback() async {
+    List<Map<String, dynamic>> jsonData = [];
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final accessToken = sharedPreferences.getString('access');
+    for (QuestionData c in dataList) {
+      jsonData.add(c.toJson());
+    }
+    TestCreationApi testCreationApi = TestCreationApi();
+    testCreationApi
+        .create(jsonEncode(jsonData), widget.testId, accessToken!)
+        .then(
+      (value) {
+        log("value -> ${value.toString()}");
+        if (value.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Test Successfully Created')));
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(testdashRoute, (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Test Creation Failed')));
+        }
+      },
     );
   }
 }
