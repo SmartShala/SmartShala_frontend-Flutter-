@@ -3,10 +3,14 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UploadApi {
+class UploadApi{
+  final String testId;
+   UploadApi(this.testId);
+   
   Future<void> uploadImage(File file) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('access');
+    print(testId);
     var dio = Dio();
     dio.options.headers["Authorization"] = "Bearer $token";
     String fileName = file.path.split('/').last;
@@ -18,7 +22,7 @@ class UploadApi {
     });
     try {
       var response = await dio.post(
-          "http://parikshana.smartshala.live/api/grader/17/",
+          "http://parikshana.smartshala.live/api/grader/$testId/",
           data: formData);
       log(response.toString());
     } on DioError catch (e) {

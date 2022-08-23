@@ -8,7 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:smart_shala/api/upload_api.dart';
 
 class EgeCam extends StatefulWidget {
-  const EgeCam({Key? key}) : super(key: key);
+  const EgeCam({Key? key, required this.testID}) : super(key: key);
+
+  final String testID;
 
   @override
   State<EgeCam> createState() => _EgeCamState();
@@ -72,7 +74,7 @@ class _EgeCamState extends State<EgeCam> {
               padding: const EdgeInsets.only(top: 0, left: 0, right: 0),
               child: ElevatedButton(
                 onPressed: (() async {
-                  upload(File(_imagePath ?? ""));
+                  upload(File(_imagePath ?? ""),widget.testID);
                 }),
                 child: const Text('Submit'),
               ),
@@ -92,9 +94,9 @@ class _EgeCamState extends State<EgeCam> {
     );
   }
 
-  Future<void> upload(File file) async {
+  Future<void> upload(File file,String testId) async {
     log("started");
-    UploadApi uploadapi = UploadApi();
+    UploadApi uploadapi = UploadApi(testId);
     await uploadapi.uploadImage(file);
   }
 }

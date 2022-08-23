@@ -1,26 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:camera/camera.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'constants/routes.dart';
-import 'views/dash.dart';
-import 'views/home.dart';
-import 'views/edgedetection.dart';
 import 'views/login.dart';
-import 'views/register.dart';
 import 'views/main_view.dart';
-
-Future<CameraDescription> cam() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-  return firstCamera;
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // final cameras = await availableCameras();
@@ -49,13 +32,6 @@ Future<void> main() async {
           ? const MainPage()
           : const LoginView(),
     ),
-    routes: {
-      loginRoute: (context) => const LoginView(),
-      registerRoute: (context) => const RegisterView(),
-      mainpageRoute: (context) => const MainPage(),
-      testdashRoute: (context) => const Dashboard(title: "Dashboard"),
-      homeRoute: (context) => const HomePage(),
-      scanRoute: (context) => const EgeCam(),
-    },
+   onGenerateRoute: RouteGenerator.generateRoute,
   ));
 }
