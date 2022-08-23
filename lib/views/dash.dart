@@ -7,6 +7,7 @@ class Dashboard extends StatelessWidget {
   const Dashboard({super.key, required this.title});
 
   final String title;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class Testlist extends StatelessWidget {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         scanRoute,
                         (route) => false,
-                        arguments: {"testid": item.testid},
+                        arguments: (item.testid).toString(),
                       );
                     }),
                     icon: Image.asset(
