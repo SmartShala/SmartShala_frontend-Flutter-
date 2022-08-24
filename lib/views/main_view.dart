@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dash.dart';
 import 'home.dart';
 import 'user_profile.dart';
-import 'results.dart';
+import 'classes.dart';
 import 'addtest.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const Dashboard(title: 'Dashboard'),
     const TestDetails(),
-    const ResultsPage(),
+    const ClassDetails(),
     const UserProfile(),
   ];
 
