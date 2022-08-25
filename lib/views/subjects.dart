@@ -98,9 +98,8 @@ class Testlist extends StatelessWidget {
                     iconSize: 100,
                     onPressed: (() {
                       // Navigator.pushNamed(context, '/edgecamera/');
-                      Navigator.of(context).pushNamedAndRemoveUntil(
+                      Navigator.of(context).pushNamed(
                         resultRoute,
-                        (route) => false,
                         arguments: (item.testid).toString(),
                       );
                     }),
