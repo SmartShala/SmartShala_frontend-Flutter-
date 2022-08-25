@@ -195,7 +195,7 @@ class _RegisterViewState extends State<RegisterView> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Not created'),
+              content: Text('Username or contact already exists'),
             ),
           );
           log(value.toJson().toString());

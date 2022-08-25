@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/padded_text.dart';
 import '../models/question_data.dart';
 import '../api/testcreationapi.dart';
+import '../api/test_delete.dart';
 import '../constants/routes.dart';
 
 /// Stateful class that is reponsible to create the individual blocks of
@@ -110,19 +111,28 @@ class TestCreationPage extends StatefulWidget {
 
 class _TestCreationPageState extends State<TestCreationPage> {
   List<QuestionData> dataList = [];
+  String? _accessToken;
 
   @override
   void initState() {
     super.initState();
+    _getToken();
     for (int i = 0; i < widget.totalQuestions; i++) {
       dataList.add(QuestionData());
     }
   }
 
+  void _getToken() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    _accessToken = sharedPreferences.getString('access');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Set Question Paper')),
+      appBar: AppBar(
+          leading: BackButton(onPressed: _onBackPressed),
+          title: const Text('Set Question Paper')),
       floatingActionButton: FloatingActionButton(
           onPressed: createCallback, child: const Icon(Icons.send)),
       body: ListView.builder(
@@ -145,14 +155,12 @@ class _TestCreationPageState extends State<TestCreationPage> {
 
   void createCallback() async {
     List<Map<String, dynamic>> jsonData = [];
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final accessToken = sharedPreferences.getString('access');
     for (QuestionData c in dataList) {
       jsonData.add(c.toJson());
     }
     TestCreationApi testCreationApi = TestCreationApi();
     testCreationApi
-        .create(jsonEncode(jsonData), widget.testId, accessToken!)
+        .create(jsonEncode(jsonData), widget.testId, _accessToken!)
         .then(
       (value) {
         log("value -> ${value.toString()}");
@@ -167,5 +175,17 @@ class _TestCreationPageState extends State<TestCreationPage> {
         }
       },
     );
+  }
+
+  void _onBackPressed() async {
+    TestDeleteApi testDeleteApi = TestDeleteApi();
+    testDeleteApi.delete(_accessToken!, widget.testId).then((value) {
+      if (value != TestDeleteApi.deleteCode) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Server Error $value')));
+      } else {
+        Navigator.of(context).pushReplacementNamed(addtestRoute);
+      }
+    });
   }
 }
