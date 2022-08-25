@@ -3,11 +3,11 @@ import 'package:http/http.dart' as http;
 import '../constants/routes.dart';
 import '../api/dash_test_api.dart';
 import '../models/dash_testmodel.dart';
+
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key, required this.title});
 
   final String title;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +43,19 @@ class Testlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (tests.isEmpty) {
+      return Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Oops! No test found."),
+          TextButton(
+            onPressed: (() {}),
+            child: const Text("Create a test"),
+          )
+        ],
+      ));
+    }
     return PageView.builder(
       scrollDirection: Axis.horizontal,
       // Let the ListView know how many items it needs to build.
@@ -92,9 +105,8 @@ class Testlist extends StatelessWidget {
                     iconSize: 100,
                     onPressed: (() {
                       // Navigator.pushNamed(context, '/edgecamera/');
-                      Navigator.of(context).pushNamedAndRemoveUntil(
+                      Navigator.of(context).pushNamed(
                         scanRoute,
-                        (route) => false,
                         arguments: (item.testid).toString(),
                       );
                     }),
