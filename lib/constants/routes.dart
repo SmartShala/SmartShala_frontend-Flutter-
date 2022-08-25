@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_shala/views/classes.dart';
 import 'package:smart_shala/views/dash.dart';
+import 'package:smart_shala/views/addtest.dart';
 import 'package:smart_shala/views/edgedetection.dart';
 import 'package:smart_shala/views/home.dart';
 import 'package:smart_shala/views/login.dart';
@@ -14,6 +15,7 @@ const registerRoute = "/register/";
 const mainpageRoute = "/main/";
 const testdashRoute = "/testdash/";
 const createtestRoute = "/createtest/";
+const addtestRoute = '/addtest/';
 const homeRoute = '/home/';
 const scanRoute = '/edgecamera/';
 const subRoute = '/subs/';
@@ -31,6 +33,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case mainpageRoute:
         return MaterialPageRoute(builder: (_) => const MainPage());
+      case addtestRoute:
+      return MaterialPageRoute(builder: (_) => const TestDetails());
       case testdashRoute:
         return MaterialPageRoute(
             builder: (_) => const Dashboard(title: 'Dashboard'));
