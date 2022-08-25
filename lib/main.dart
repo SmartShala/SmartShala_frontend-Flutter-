@@ -25,7 +25,7 @@ Future<void> main() async {
       splashIconSize: 300,
       splashTransition: SplashTransition.fadeTransition,
       splash: Center(
-        child: Image.asset('images/logo.jpeg'),
+        child: Image.asset('images/logo.png'),
       ),
       // if logged in, redirect to main page, else to login page
       nextScreen: (accessToken != null && accessToken.isNotEmpty)

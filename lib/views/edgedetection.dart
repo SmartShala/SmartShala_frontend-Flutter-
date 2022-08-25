@@ -73,9 +73,7 @@ class _EgeCamState extends State<EgeCam> {
             Padding(
               padding: const EdgeInsets.only(top: 0, left: 0, right: 0),
               child: ElevatedButton(
-                onPressed: (() async {
-                  upload(File(_imagePath ?? ""),widget.testID);
-                }),
+                onPressed: _uploadCallback,
                 child: const Text('Submit'),
               ),
             ),
@@ -94,9 +92,9 @@ class _EgeCamState extends State<EgeCam> {
     );
   }
 
-  Future<void> upload(File file,String testId) async {
+  Future<void> _uploadCallback() async {
     log("started");
-    UploadApi uploadapi = UploadApi(testId);
-    await uploadapi.uploadImage(file);
+    UploadApi uploadapi = UploadApi(widget.testID);
+    await uploadapi.uploadImage(File(_imagePath!));
   }
 }
