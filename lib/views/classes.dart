@@ -38,11 +38,6 @@ class _ClassDetailsState extends State<ClassDetails> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -59,9 +54,9 @@ class _ClassDetailsState extends State<ClassDetails> {
                 height: 100.0,
                 width: 420.0,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 4, 22, 31),
+                  color: const Color.fromARGB(255, 4, 22, 31),
                   border: Border.all(
-                    color: Color.fromARGB(255, 243, 241, 241),
+                    color: const Color.fromARGB(255, 243, 241, 241),
                   ),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -76,7 +71,7 @@ class _ClassDetailsState extends State<ClassDetails> {
                               .textTheme
                               .headline4!
                               .copyWith(
-                                  color: Color.fromARGB(255, 255, 255, 255))),
+                                  color: const Color.fromARGB(255, 255, 255, 255))),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                           subRoute,

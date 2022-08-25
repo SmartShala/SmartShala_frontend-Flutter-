@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_shala/constants/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -39,7 +40,9 @@ class _HomePage extends State<HomePage> {
             Image.asset(imagePath),
             Expanded(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(classRoute);
+                    },
                     child: Text(
                       title,
                       style: const TextStyle(fontSize: 16, height: 1.4),

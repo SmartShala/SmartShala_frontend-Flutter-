@@ -16,7 +16,7 @@ Future<void> main() async {
   // // Get a specific camera from the list of available cameras.
   // final firstCamera = cameras.first;
   runApp(MaterialApp(
-    title: 'Flutter Demo',
+    title: 'SmartShala',
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
