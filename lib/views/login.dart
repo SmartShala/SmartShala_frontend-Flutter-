@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/routes.dart';
@@ -47,21 +49,29 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
       body: Stack(children: [
         Container(
-          padding: const EdgeInsets.only(left: 35, top: 130),
-          child: const Text(
-            'Welcome\nBack',
-            style: TextStyle(color: Colors.white, fontSize: 33),
-          ),
+          // padding: const EdgeInsets.only(left: 35, top: 130),
+          height: MediaQuery.of(context).size.height * 1.0,
+          width: MediaQuery.of(context).size.width * 1.0,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            colors: [Colors.blue, Color.fromARGB(255, 255, 255, 255)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )),
+          // child: Image.asset(
+          //   "images/log_img.png",
+          // )
         ),
         SingleChildScrollView(
           child: Container(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Image.asset(
+                "images/log_img.png",
+              ),
+              const SizedBox(height: 50),
               Container(
                 margin: const EdgeInsets.only(left: 35, right: 35),
                 child: Form(
@@ -185,7 +195,7 @@ class _LoginViewState extends State<LoginView> {
 
   static InputDecoration _getDecor(String label) {
     return InputDecoration(
-        fillColor: Colors.grey.shade100,
+        fillColor: Color.fromARGB(249, 245, 245, 245),
         filled: true,
         hintText: label,
         border: OutlineInputBorder(
