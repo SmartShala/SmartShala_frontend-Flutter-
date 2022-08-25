@@ -78,9 +78,8 @@ class _ClassDetailsState extends State<ClassDetails> {
                               .copyWith(
                                   color: Color.fromARGB(255, 255, 255, 255))),
                       onPressed: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
+                        Navigator.of(context).pushNamed(
                           subRoute,
-                          (route) => false,
                           arguments: (item?[0]),
                         );
                       },
