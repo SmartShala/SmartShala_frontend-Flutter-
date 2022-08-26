@@ -49,6 +49,15 @@ class Resultlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (results.isEmpty) {
+      return Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text("Oops! No results found."),
+        ],
+      ));
+    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       // Let the ListView know how many items it needs to build.

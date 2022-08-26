@@ -5,10 +5,14 @@ import 'package:smart_shala/views/addtest.dart';
 import 'package:smart_shala/views/edgedetection.dart';
 import 'package:smart_shala/views/home.dart';
 import 'package:smart_shala/views/login.dart';
+import 'package:smart_shala/views/login_student.dart';
 import 'package:smart_shala/views/main_view.dart';
 import 'package:smart_shala/views/register.dart';
 import 'package:smart_shala/views/result.dart';
+import 'package:smart_shala/views/studentdash.dart';
 import 'package:smart_shala/views/subjects.dart';
+
+import '../views/sub.dart';
 
 const loginRoute = "/login/";
 const registerRoute = "/register/";
@@ -21,6 +25,9 @@ const scanRoute = '/edgecamera/';
 const subRoute = '/subs/';
 const resultRoute = '/result/';
 const classRoute = '/class/';
+const subjectRoute = '/subject';
+const studentloginRoute = '/studentlogin/';
+const studashRoute = '/studentdash/';
 const baseurl = "http://parikshana.smartshala.live/api";
 
 class RouteGenerator {
@@ -34,7 +41,7 @@ class RouteGenerator {
       case mainpageRoute:
         return MaterialPageRoute(builder: (_) => const MainPage());
       case addtestRoute:
-      return MaterialPageRoute(builder: (_) => const TestDetails());
+        return MaterialPageRoute(builder: (_) => const TestDetails());
       case testdashRoute:
         return MaterialPageRoute(
             builder: (_) => const Dashboard(title: 'Dashboard'));
@@ -65,6 +72,13 @@ class RouteGenerator {
                     testID: args,
                   ));
         }
+        break;
+      case subjectRoute:
+        return MaterialPageRoute(builder: (_) => const SubjectDetails());
+      case studentloginRoute:
+        return MaterialPageRoute(builder: (_) => const LoginstudentView());
+      case studashRoute:
+        return MaterialPageRoute(builder: (_) => const StudentDash());
     }
     return null;
   }
