@@ -70,8 +70,9 @@ class _LoginViewState extends State<LoginView> {
             TextButton(
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.all(24),
-                primary: Colors.white,
-                textStyle: const TextStyle(fontSize: 20),
+                primary: const Color.fromARGB(255, 243, 4, 4),
+                textStyle:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
               ),
               onPressed: () {
                 Navigator.pushNamed(context, studentloginRoute);

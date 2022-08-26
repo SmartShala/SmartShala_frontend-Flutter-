@@ -43,17 +43,17 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.article),
               label: 'Tests',
-              backgroundColor: Colors.green,
+              backgroundColor: Color.fromARGB(255, 105, 184, 249),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.add),
               label: 'Add Test',
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.blue,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.history_edu),
               label: 'Results',
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.blue,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
