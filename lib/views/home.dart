@@ -12,7 +12,10 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(
+          title: const Text('Home'),
+          backgroundColor: const Color.fromARGB(255, 3, 19, 32),
+        ),
         body: Column(
           children: [
             Image.asset('images/home_bg.gif'),

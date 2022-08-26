@@ -66,22 +66,21 @@ class Testlist extends StatelessWidget {
         final item = tests[index];
         return Center(
           child: Container(
-            height: 640.0,
-            width: 370.0,
-            decoration: BoxDecoration(
-              color: Colors.blueGrey,
-              border: Border.all(
-                color: Colors.white,
-              ),
-              borderRadius: BorderRadius.circular(30.0),
-            ),
+            height: MediaQuery.of(context).size.height * 1.0,
+            width: MediaQuery.of(context).size.width * 1.0,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              colors: [Colors.blue, Color.fromARGB(255, 255, 255, 255)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )),
             child: Column(
               children: [
                 Text(item.subject,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(color: const Color.fromARGB(255, 2, 25, 44))),
+                    style: const TextStyle(
+                      fontSize: 80.0,
+                      fontWeight: FontWeight.w900,
+                    )),
                 const SizedBox(
                   height: 20,
                 ),
@@ -89,7 +88,7 @@ class Testlist extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline4!
-                        .copyWith(color: Colors.white)),
+                        .copyWith(color: Color.fromARGB(255, 16, 16, 16))),
                 const SizedBox(
                   height: 25,
                 ),
@@ -97,22 +96,31 @@ class Testlist extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline4!
-                        .copyWith(color: Colors.white)),
+                        .copyWith(color: Color.fromARGB(255, 20, 20, 20))),
                 const SizedBox(
-                  height: 50,
+                  height: 100,
                 ),
-                IconButton(
-                    iconSize: 100,
-                    onPressed: (() {
-                      // Navigator.pushNamed(context, '/edgecamera/');
-                      Navigator.of(context).pushNamed(
-                        scanRoute,
-                        arguments: (item.testid).toString(),
-                      );
-                    }),
-                    icon: Image.asset(
-                      'images/scan-page-512.jpg',
-                    ))
+                Container(
+                  // height: 300,
+                  // width: 300,
+                  padding: const EdgeInsets.all(64),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: IconButton(
+                      iconSize: 150.0,
+                      onPressed: (() {
+                        // Navigator.pushNamed(context, '/edgecamera/');
+                        Navigator.of(context).pushNamed(
+                          scanRoute,
+                          arguments: (item.testid).toString(),
+                        );
+                      }),
+                      icon: Image.asset(
+                        'images/SCAN.jpg',
+                      )),
+                )
               ],
             ),
           ),
