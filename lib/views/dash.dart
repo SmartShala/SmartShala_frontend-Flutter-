@@ -76,6 +76,8 @@ class Testlist extends StatelessWidget {
             )),
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(item.subject,
                       style: const TextStyle(
@@ -86,18 +88,16 @@ class Testlist extends StatelessWidget {
                     height: 20,
                   ),
                   Text(item.topic,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: Color.fromARGB(255, 16, 16, 16))),
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w400,
+                      )),
                   const SizedBox(
                     height: 25,
                   ),
                   Text('Class:${item.forClass}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: Color.fromARGB(255, 20, 20, 20))),
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: const Color.fromARGB(255, 20, 20, 20))),
                   const SizedBox(
                     height: 100,
                   ),

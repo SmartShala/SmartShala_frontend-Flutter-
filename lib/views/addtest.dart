@@ -122,7 +122,7 @@ class _TestDetailsState extends State<TestDetails> {
                           const Text('Subject', style: TextStyle(fontSize: 20)),
                           const SizedBox(width: 6),
                           SizedBox(
-                            width: 100,
+                            width: 70,
                             child: DropdownButtonFormField<int>(
                               hint: const Text('Choose'),
                               validator: (value) =>
