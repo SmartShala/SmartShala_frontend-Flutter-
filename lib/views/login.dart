@@ -57,8 +57,8 @@ class _LoginViewState extends State<LoginView> {
           decoration: const BoxDecoration(
               gradient: LinearGradient(
             colors: [Colors.blue, Color.fromARGB(255, 255, 255, 255)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
           )),
           // child: Image.asset(
           //   "images/log_img.png",
@@ -69,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Image.asset(
-                "images/log_img.png",
+                "images/teacher_logo.png",
               ),
               const SizedBox(height: 50),
               Container(
