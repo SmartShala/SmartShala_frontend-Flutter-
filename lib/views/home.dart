@@ -31,14 +31,16 @@ class _HomePage extends State<HomePage> {
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.all(10),
           width: 350,
-          height: 40,
-          decoration: const BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-            color: Colors.grey,
-            width: 1,
-          ))),
+          height: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: Colors.grey,
+              width: 1,
+            ),
+          ),
           child: Row(children: [
             Image.asset(imagePath),
             Expanded(
