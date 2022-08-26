@@ -41,7 +41,7 @@ class _ClassDetailsState extends State<ClassDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Results"),
+          title: const Text("Classes"),
           backgroundColor: const Color.fromARGB(255, 3, 37, 1),
         ),
         body: ListView.builder(
@@ -52,7 +52,8 @@ class _ClassDetailsState extends State<ClassDetails> {
             return Center(
               child: Container(
                 height: 100.0,
-                width: 420.0,
+                width: 400.0,
+                margin: const EdgeInsets.symmetric(vertical: 25),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 4, 22, 31),
                   border: Border.all(

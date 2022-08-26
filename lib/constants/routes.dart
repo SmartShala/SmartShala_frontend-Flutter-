@@ -6,6 +6,7 @@ import 'package:smart_shala/views/edgedetection.dart';
 import 'package:smart_shala/views/home.dart';
 import 'package:smart_shala/views/login.dart';
 import 'package:smart_shala/views/login_student.dart';
+import 'package:smart_shala/views/logoptions.dart';
 import 'package:smart_shala/views/main_view.dart';
 import 'package:smart_shala/views/register.dart';
 import 'package:smart_shala/views/result.dart';
@@ -15,6 +16,7 @@ import 'package:smart_shala/views/subjects.dart';
 import '../views/sub.dart';
 
 const loginRoute = "/login/";
+const loginoptRoute = "/logoption/";
 const registerRoute = "/register/";
 const mainpageRoute = "/main/";
 const testdashRoute = "/testdash/";
@@ -28,14 +30,19 @@ const classRoute = '/class/';
 const subjectRoute = '/subject';
 const studentloginRoute = '/studentlogin/';
 const studashRoute = '/studentdash/';
+const loginstuRoute = '/logstud/';
 const baseurl = "http://parikshana.smartshala.live/api";
 
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
+      case loginoptRoute:
+        return MaterialPageRoute(builder: (_) => const PrevLogin());
       case loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginView());
+      case loginstuRoute:
+        return MaterialPageRoute(builder: (_) => const LoginstudentView());
       case registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterView());
       case mainpageRoute:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_shala/constants/routes.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _UserProfileState extends State<UserProfile> {
             onPressed: () {
               _clearOnLogout();
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/login/', (route) => false);
+                  .pushNamedAndRemoveUntil(loginoptRoute, (route) => false);
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Successfully Logged Out')));
             },
