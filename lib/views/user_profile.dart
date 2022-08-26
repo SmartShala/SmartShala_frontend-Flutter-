@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_shala/constants/routes.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -60,12 +61,14 @@ class _UserProfileState extends State<UserProfile> {
           onPressed: () {},
           backgroundColor: Colors.redAccent,
           child: IconButton(
-            onPressed: () async {
-              await _clearOnLogout();
-              if (!mounted) return;
-            },
-            icon: const Icon(Icons.logout),
-          )),
+              onPressed: () {
+                _clearOnLogout();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(loginoptRoute, (route) => false);
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Successfully Logged Out')));
+              },
+              icon: const Icon(Icons.logout))),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text('User Profile'),

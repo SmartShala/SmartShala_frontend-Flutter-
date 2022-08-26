@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import '../api/stdtest_api.dart';
 import '../constants/routes.dart';
@@ -62,12 +59,12 @@ class Testlist extends StatelessWidget {
             height: 640.0,
             width: 370.0,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 125, 223, 248),
-              border: Border.all(
-                color: Colors.white,
-              ),
-              borderRadius: BorderRadius.circular(30.0),
-            ),
+                borderRadius: BorderRadius.circular(40.0),
+                gradient: LinearGradient(
+                  colors: [Colors.blue, Color.fromARGB(255, 255, 255, 255)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )),
             child: Column(
               children: [
                 Text(item.subject,

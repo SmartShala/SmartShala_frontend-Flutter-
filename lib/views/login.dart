@@ -67,20 +67,6 @@ class _LoginViewState extends State<LoginView> {
         SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(24),
-                primary: const Color.fromARGB(255, 243, 4, 4),
-                textStyle:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, studentloginRoute);
-              },
-              child: const Text(
-                "Students click here..",
-              ),
-            ),
             Image.asset(
               "images/teacher_logo.png",
             ),

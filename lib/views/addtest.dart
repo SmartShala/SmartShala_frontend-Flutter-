@@ -63,7 +63,8 @@ class _TestDetailsState extends State<TestDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.cyan, title: const Text('Create Test')),
+      appBar: AppBar(
+          backgroundColor: Colors.cyan, title: const Text('Create Test')),
       body: Stack(
         children: [
           Image.asset('images/addtest_bg.png'),

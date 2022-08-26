@@ -74,54 +74,56 @@ class Testlist extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             )),
-            child: Column(
-              children: [
-                Text(item.subject,
-                    style: const TextStyle(
-                      fontSize: 80.0,
-                      fontWeight: FontWeight.w900,
-                    )),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(item.topic,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(color: Color.fromARGB(255, 16, 16, 16))),
-                const SizedBox(
-                  height: 25,
-                ),
-                Text('Class:${item.forClass}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(color: Color.fromARGB(255, 20, 20, 20))),
-                const SizedBox(
-                  height: 100,
-                ),
-                Container(
-                  // height: 300,
-                  // width: 300,
-                  padding: const EdgeInsets.all(64),
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: IconButton(
-                      iconSize: 150.0,
-                      onPressed: (() {
-                        // Navigator.pushNamed(context, '/edgecamera/');
-                        Navigator.of(context).pushNamed(
-                          scanRoute,
-                          arguments: (item.testid).toString(),
-                        );
-                      }),
-                      icon: Image.asset(
-                        'images/SCAN.jpg',
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(item.subject,
+                      style: const TextStyle(
+                        fontSize: 50.0,
+                        fontWeight: FontWeight.w500,
                       )),
-                )
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(item.topic,
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w400,
+                      )),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Text('Class:${item.forClass}',
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: const Color.fromARGB(255, 20, 20, 20))),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Container(
+                    // height: 300,
+                    // width: 300,
+                    padding: const EdgeInsets.all(64),
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                    child: IconButton(
+                        iconSize: 150.0,
+                        onPressed: (() {
+                          // Navigator.pushNamed(context, '/edgecamera/');
+                          Navigator.of(context).pushNamed(
+                            scanRoute,
+                            arguments: (item.testid).toString(),
+                          );
+                        }),
+                        icon: Image.asset(
+                          'images/SCAN.jpg',
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         );
