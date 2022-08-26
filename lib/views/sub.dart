@@ -2,15 +2,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../api/substd_api.dart';
-import '../constants/routes.dart';
 
-class ClassDetails extends StatefulWidget {
-  const ClassDetails({Key? key}) : super(key: key);
+class SubjectDetails extends StatefulWidget {
+  const SubjectDetails({Key? key}) : super(key: key);
   @override
-  State<ClassDetails> createState() => _ClassDetailsState();
+  State<SubjectDetails> createState() => _SubjectDetailsState();
 }
 
-class _ClassDetailsState extends State<ClassDetails> {
+class _SubjectDetailsState extends State<SubjectDetails> {
   int? standard;
   int? subject;
   String? _accessToken;
@@ -41,14 +40,14 @@ class _ClassDetailsState extends State<ClassDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Results"),
+          title: const Text("Subjects"),
           backgroundColor: const Color.fromARGB(255, 3, 37, 1),
         ),
         body: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: standards?.length,
+          itemCount: subjects?.length,
           itemBuilder: (context, index) {
-            final item = standards?[index];
+            final item = subjects?[index];
             return Center(
               child: Container(
                 height: 100.0,
@@ -65,21 +64,9 @@ class _ClassDetailsState extends State<ClassDetails> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextButton(
-                      child: Text('Standard:${(item?[1])}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(
-                                  color: const Color.fromARGB(
-                                      255, 255, 255, 255))),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          subRoute,
-                          arguments: (item?[0]),
-                        );
-                      },
-                    ),
+                    Text(item?[1],
+                        style: Theme.of(context).textTheme.headline4!.copyWith(
+                            color: const Color.fromARGB(255, 255, 255, 255))),
                     const SizedBox(
                       height: 20,
                     ),

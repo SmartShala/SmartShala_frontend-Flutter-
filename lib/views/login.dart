@@ -65,83 +65,94 @@ class _LoginViewState extends State<LoginView> {
           // )
         ),
         SingleChildScrollView(
-          child: Container(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Image.asset(
-                "images/teacher_logo.png",
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.all(24),
+                primary: Colors.white,
+                textStyle: const TextStyle(fontSize: 20),
               ),
-              const SizedBox(height: 50),
-              Container(
-                margin: const EdgeInsets.only(left: 35, right: 35),
-                child: Form(
-                  key: _formkey,
-                  child: Column(children: [
-                    TextFormField(
-                      controller: _emailCtrl,
-                      validator: valid.isEmail,
-                      style: const TextStyle(color: Colors.black),
-                      autocorrect: false,
-                      decoration: _getDecor('Email'),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    TextFormField(
-                      validator: valid.isShort,
-                      controller: _passCtrl,
-                      autocorrect: false,
-                      obscureText: true,
-                      decoration: _getDecor('Password'),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Row(
+              onPressed: () {
+                Navigator.pushNamed(context, studentloginRoute);
+              },
+              child: const Text(
+                "Students click here..",
+              ),
+            ),
+            Image.asset(
+              "images/teacher_logo.png",
+            ),
+            const SizedBox(height: 50),
+            Container(
+              margin: const EdgeInsets.only(left: 35, right: 35),
+              child: Form(
+                key: _formkey,
+                child: Column(children: [
+                  TextFormField(
+                    controller: _emailCtrl,
+                    validator: valid.isEmail,
+                    style: const TextStyle(color: Colors.black),
+                    autocorrect: false,
+                    decoration: _getDecor('Email'),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    validator: valid.isShort,
+                    controller: _passCtrl,
+                    autocorrect: false,
+                    obscureText: true,
+                    decoration: _getDecor('Password'),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Sign in',
+                        style: TextStyle(
+                            fontSize: 27, fontWeight: FontWeight.w700),
+                      ),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundColor: const Color(0xff4c505b),
+                        child: IconButton(
+                            color: Colors.white,
+                            onPressed: loginCallback,
+                            icon: const Icon(
+                              Icons.arrow_forward,
+                            )),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Sign in',
-                          style: TextStyle(
-                              fontSize: 27, fontWeight: FontWeight.w700),
-                        ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: const Color(0xff4c505b),
-                          child: IconButton(
-                              color: Colors.white,
-                              onPressed: loginCallback,
-                              icon: const Icon(
-                                Icons.arrow_forward,
-                              )),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(registerRoute);
-                            },
-                            child: const Text(
-                              'Don\'t have an account? Sign Up',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Color(0xff4c505b),
-                                  fontSize: 18),
-                            ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(registerRoute);
+                          },
+                          child: const Text(
+                            'Don\'t have an account? Sign Up',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Color(0xff4c505b),
+                                fontSize: 18),
                           ),
-                        ]),
-                  ]),
-                ),
+                        ),
+                      ]),
+                ]),
               ),
-            ]),
-          ),
+            ),
+          ]),
         ),
       ]),
     );
