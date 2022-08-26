@@ -6,6 +6,7 @@ import 'package:edge_detection/edge_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_shala/api/upload_api.dart';
+import '../progress_hud.dart';
 
 class EgeCam extends StatefulWidget {
   const EgeCam({Key? key, required this.testID}) : super(key: key);
@@ -19,6 +20,7 @@ class EgeCam extends StatefulWidget {
 class _EgeCamState extends State<EgeCam> {
   String? _imagePath;
   bool cam = false;
+  bool _isApiCallInProgress = false;
 
   @override
   void initState() {
@@ -50,6 +52,14 @@ class _EgeCamState extends State<EgeCam> {
 
   @override
   Widget build(BuildContext context) {
+    return ProgressHUD(
+      inAsyncCall: _isApiCallInProgress,
+      opacity: 0.3,
+      child: _uiSetup(context),
+    );
+  }
+
+  Widget _uiSetup(BuildContext context) {
     // final arguments = (ModalRoute.of(context)?.settings.arguments ??
     //     <int, dynamic>{}) as Map;
     // log(arguments['testid']);
@@ -73,9 +83,7 @@ class _EgeCamState extends State<EgeCam> {
             Padding(
               padding: const EdgeInsets.only(top: 0, left: 0, right: 0),
               child: ElevatedButton(
-                onPressed: (() async {
-                  upload(File(_imagePath ?? ""),widget.testID);
-                }),
+                onPressed: _uploadCallback,
                 child: const Text('Submit'),
               ),
             ),
@@ -94,9 +102,19 @@ class _EgeCamState extends State<EgeCam> {
     );
   }
 
-  Future<void> upload(File file,String testId) async {
-    log("started");
-    UploadApi uploadapi = UploadApi(testId);
-    await uploadapi.uploadImage(file);
+  Future<void> _uploadCallback() async {
+    log("started image upload");
+    setState(() {
+      _isApiCallInProgress = true;
+    });
+    UploadApi uploadapi = UploadApi(widget.testID);
+    await uploadapi.uploadImage(File(_imagePath!));
+    setState(() {
+      _isApiCallInProgress = false;
+    });
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Image uploaded'),
+    ));
   }
 }
