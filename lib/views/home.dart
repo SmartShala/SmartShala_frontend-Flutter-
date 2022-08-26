@@ -12,19 +12,22 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(
+          title: const Text('Home'),
+          backgroundColor: const Color.fromARGB(255, 3, 19, 32),
+        ),
         body: Column(
           children: [
             Image.asset('images/home_bg.gif'),
             const SizedBox(height: 30),
-            _buildButton("images/classes.jpg", "Classes"),
-            _buildButton("images/subjects.png", "Subjects"),
-            _buildButton("images/results.png", "Test results"),
+            _buildButton("images/classes.jpg", "Classes", classRoute),
+            _buildButton("images/subjects.png", "Subjects", subjectRoute),
+            _buildButton("images/results.png", "Test results", classRoute),
           ],
         ));
   }
 
-  Widget _buildButton(String imagePath, String title) => Padding(
+  Widget _buildButton(String imagePath, String title, String route) => Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -41,7 +44,7 @@ class _HomePage extends State<HomePage> {
             Expanded(
                 child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(classRoute);
+                      Navigator.of(context).pushNamed(route);
                     },
                     child: Text(
                       title,
