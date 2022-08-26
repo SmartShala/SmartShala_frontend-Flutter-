@@ -25,8 +25,31 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
-  void _clearOnLogout() async {
-    await _sharedPreferences!.clear();
+  Future<void> _clearOnLogout() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: const Text("Confimation"),
+              content: const Text("Are you sure you want to exit?"),
+              actions: [
+                ElevatedButton(
+                    onPressed: () async {
+                      await _sharedPreferences!.clear();
+                      if (!mounted) return;
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/login/', (route) => false);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Successfully Logged Out')));
+                    },
+                    child: const Text('Sure')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: const Text('Cancel')),
+              ]);
+        });
   }
 
   @override
@@ -37,12 +60,9 @@ class _UserProfileState extends State<UserProfile> {
           onPressed: () {},
           backgroundColor: Colors.redAccent,
           child: IconButton(
-            onPressed: () {
-              _clearOnLogout();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/login/', (route) => false);
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Successfully Logged Out')));
+            onPressed: () async {
+              await _clearOnLogout();
+              if (!mounted) return;
             },
             icon: const Icon(Icons.logout),
           )),
